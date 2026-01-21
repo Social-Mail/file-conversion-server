@@ -6,6 +6,9 @@ import { Query } from "@entity-access/server-pages/dist/core/Query.js";
 import { LocalFile } from "@entity-access/server-pages/dist/core/LocalFile.js";
 import { TempFileResult } from "@entity-access/server-pages/dist/Content.js";
 import { CORS } from "../../../../core/CORS.js";
+import { tempDiskCache } from "../../../../core/tempDiskCache.js";
+import { parse } from "path";
+import { Readable } from "stream";
 
 export default class extends Page {
 
@@ -18,6 +21,9 @@ export default class extends Page {
     @Query
     filePath: string;
 
+    @Query
+    sourceUrl: string;
+
     @Inject
     fcs: FileConversionService;
 
@@ -25,7 +31,17 @@ export default class extends Page {
         const fileName = this.childPath[this.childPath.length-1];
         const { senderDomain, type } = this;
 
-        const input = new LocalFile(this.filePath, void 0, void 0, () => void 0);
+        let input = null as LocalFile;
+
+        if (this.sourceUrl) {
+            const u = new URL(this.sourceUrl);
+            const { base, ext } = parse(u.pathname);
+            input = tempDiskCache.createTempFile(ext, base);
+            const rs = await fetch(this.sourceUrl);
+            await input.writeAll(Readable.fromWeb(rs.body as any));
+        } else {
+            input = new LocalFile(this.filePath, void 0, void 0, () => void 0);
+        }
 
         const file = await this.fcs.downloadConvertedFile({ input, fileName, senderDomain, type  });
 
