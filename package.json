@@ -21,8 +21,10 @@
   "dependencies": {
     "@entity-access/entity-access": "^1.0.534",
     "@entity-access/server-pages": "^1.1.578",
+    "console-log-colors": "^0.5.0",
     "heic-convert": "^2.1.0",
     "iconv-lite": "^0.7.2",
+    "jsdom": "^27.4.0",
     "sharp": "^0.34.5",
     "tesseract.js": "^7.0.0",
     "undici": "^7.19.0"

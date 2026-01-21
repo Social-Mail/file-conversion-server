@@ -3,8 +3,8 @@ version: "3"
 services:
   app:
     # restart: on-failure
-    container_name: social-mail-puppeteer-server
-    image: social-mail-puppeteer-server
+    container_name: social-mail-file-conversion-server
+    image: social-mail-file-conversion-server
     build:
       context: ../
       dockerfile: Dockerfile
