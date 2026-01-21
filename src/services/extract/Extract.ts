@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
 import { LocalFile } from "@entity-access/server-pages/dist/core/LocalFile.js";
-import { FileType } from "../../../common/FileType.js";
 import { copyFile } from "fs/promises";
 import { Convert } from "../convert/Convert.js";
-import LockFile from "../../storage/LockFile.js";
 import PdfDoc from "./pdf/PdfDoc.js";
-import IsolatedProcess from "../../../isolated/IsolatedProcess.js";
-import { tempDiskCache } from "../../storage/tempDiskCache.js";
+import LockFile from "../../core/LockFile.js";
+import { tempDiskCache } from "../../core/tempDiskCache.js";
+import IsolatedProcess from "../isolated/IsolatedProcess.js";
+import { FileType } from "../../core/FileType.js";
 
 export class Extract {
 

@@ -22,14 +22,18 @@
     "@entity-access/entity-access": "^1.0.534",
     "@entity-access/server-pages": "^1.1.578",
     "console-log-colors": "^0.5.0",
+    "dompurify": "^3.3.1",
     "heic-convert": "^2.1.0",
     "iconv-lite": "^0.7.2",
     "jsdom": "^27.4.0",
+    "mailparser": "^3.9.1",
     "sharp": "^0.34.5",
     "tesseract.js": "^7.0.0",
     "undici": "^7.19.0"
   },
   "devDependencies": {
+    "@types/jsdom": "^27.0.0",
+    "@types/mailparser": "^3.4.6",
     "@types/node": "^22.7.3",
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@typescript-eslint/parser": "^6.6.0",

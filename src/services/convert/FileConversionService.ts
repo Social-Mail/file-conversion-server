@@ -1,6 +1,5 @@
-import Inject, { RegisterScoped, ServiceProvider } from "@entity-access/entity-access/dist/di/di.js";
+import Inject, { RegisterScoped } from "@entity-access/entity-access/dist/di/di.js";
 import { LocalFile } from "@entity-access/server-pages/dist/core/LocalFile.js";
-import TimeSpan from "@entity-access/entity-access/dist/types/TimeSpan.js";
 import { Convert } from "./Convert.js";
 import PdfDoc from "../extract/pdf/PdfDoc.js";
 import FFCommand from "./FFCommand.js";
@@ -10,11 +9,9 @@ import { tempDiskCache } from "../../core/tempDiskCache.js";
 
 interface IDownloadConvertedFile {
     input: LocalFile;
-    fileContentID?: number;
     type: string;
     fileName: string;
-    senderDomain?: string;
-    key?: string;
+    senderDomain?
 }
 
 @RegisterScoped
@@ -26,15 +23,12 @@ export default class FileConversionService {
 
     async downloadConvertedFile({
         input,
-        fileContentID,
         type,
         fileName,
         senderDomain
     }: IDownloadConvertedFile ): Promise<LocalFile> {
 
         const file = input;
-
-        const ttl = TimeSpan.fromDays(30);
 
         // transform here...
         if (/^(size|jpg|png|webp|gif|face\-circle)\(?/i.test(type)) {
