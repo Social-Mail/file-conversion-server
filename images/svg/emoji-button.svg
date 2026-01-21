@@ -1,0 +1,27 @@
+<svg viewBox="0 0 54 20"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- min width 28 -->
+    <rect
+        x="0"
+        y="0"
+        width="100%"
+        height="100%"
+        rx="10"
+        ry="10"
+        fill="#808080"
+        fill-opacity="0.3"
+        />
+    <image
+        xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAvlJREFUeNrsV11u00AQHjtOm5SCAlTNAzwEIaQiIZSq/LxW4gDQGzQngJwAcQK4QXIDkgOg+pWKiKrwiJQUEVAqSE0J+cF/zLi7m7VjJ05IeIFPGtlOd2a+mZ3Z2QL861DCfnyztbWLj4coGZRtFB3FQKneqdXK4wyO00WpoL4RSQCV8xeXlZfnNCW3mhz+qWO60B640LVc+mygFNCQLut2HtzL4aNkOrCdVCFK12C6lRECaCBvu7CXUCCjpNOgrWfBtSywWy18mt6ar30XxeEqO9wQ6eJjj6JWz18ALYu6pgnmUUMQOUESrZ7QLfBMKswApatOBrQrV2Fp4yYoWtJbaR+3oP+2JgwdoxGKiEWzuZFJGMx5PnHpMqTu3hdrB+8PwWp+itRFEg2erCfknCJfvnVbOPcgvyPW0yqsaB5vIv2U6VIGPF0ZlAUZaykVEmc5J93H9MIJUNHA0vUbI0VlHtVHfltLiZ3b5YYocxQAB0VO2ZOhoppUW488PfbhRaCkV8Ri58cpDN4des8gKAMkpuPyaLxo7XYb3F4XrM9NfP8W2iVJYgGeXk4m4E8dFl1//7UovjBk00Rg2CkUbTDiMKQS/q5TfY6RvZc+rN5xzr39xs2UWzUuTMf3afgI2Cfts0VS5c4btjt8l7ugwQuHxO31FkZgMGTQkLtAl3t3kWAnIuFAJlD9G4OHjmVpC6rBo7jOW2NR+NhxxDzB/b8mZ4BQXHTqpfQLX4LA6qt9GiyVRRH40hX9V5GnoRpYV2CDYq6gKcr632A+IJQAZoEW7Mw79YERbkQSYCT0IMtZQaOi+dN3B9CDa9QwRSRBl4UX86h61nblqKvc2MMcW7PERu5MRff9l8udR2ZUHWcEM0GK5Wmd080njvOJBGYhQY7ZtWui81gEJBLFOM5Zvz+L43xiDYTUBNVDaYLzwqT/HWYmELyCB5wbrM/1aeyp0xLA7aAxusnHKU04dH7Artn6tPaUP+lzzMbzD6d2xnKgGDzh/iMufgswAGLzgqARD4D8AAAAAElFTkSuQmCC"
+        x="8"
+        y="1"
+        width="18"
+        height="18"></image>
+    <text
+        x="30"
+        y="14"
+        fill="#000000"
+        fill-opacity="0.3"
+        style="font-size:12px; z-order:12">50</text>
+  </svg>

@@ -20,6 +20,13 @@ export interface IDiskCacheContainer {
 
 export default class BaseDiskCache {
 
+    createTempFile(ext: string, fileName: string, mimeType?: string) {
+        const folder = join(this.root, randomUUID());
+        ensureDir(folder);
+        const path = join(folder, fileName);
+        return new LocalFile(path, fileName, mimeType, () => this.deleteFile(path).catch(console.error));
+    }
+
     protected readonly root: string;
     protected readonly keepTTLSeconds: number;
     protected readonly minSize: number;

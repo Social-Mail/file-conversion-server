@@ -1,9 +1,15 @@
 import Inject, { RegisterScoped, ServiceProvider } from "@entity-access/entity-access/dist/di/di.js";
 import { LocalFile } from "@entity-access/server-pages/dist/core/LocalFile.js";
 import TimeSpan from "@entity-access/entity-access/dist/types/TimeSpan.js";
+import { Convert } from "./Convert.js";
+import PdfDoc from "../extract/pdf/PdfDoc.js";
+import FFCommand from "./FFCommand.js";
+import StringFormat from "../../core/StringFormat.js";
+import ImageConverterService from "../image-converter/ImageConverterService.js";
+import { tempDiskCache } from "../../core/tempDiskCache.js";
 
 interface IDownloadConvertedFile {
-    appFile: AppFile;
+    input: LocalFile;
     fileContentID?: number;
     type: string;
     fileName: string;
@@ -14,71 +20,42 @@ interface IDownloadConvertedFile {
 @RegisterScoped
 export default class FileConversionService {
 
+
     @Inject
-    private tempFileService: TempFileService;
+    private ics: ImageConverterService;
 
     async downloadConvertedFile({
-        appFile,
+        input,
         fileContentID,
         type,
         fileName,
-        key = `/file/${type}/${fileContentID ?? appFile.fileContentID}/${fileName}`,
         senderDomain
     }: IDownloadConvertedFile ): Promise<LocalFile> {
 
-        let file: LocalFile;
+        const file = input;
 
         const ttl = TimeSpan.fromDays(30);
 
         // transform here...
         if (/^(size|jpg|png|webp|gif|face\-circle)\(?/i.test(type)) {
-
-            return await this.cacheService.get({ key, ttl,
-                factory: async () => {
-
-                    file = await this.downloadFileContent(appFile, fileContentID);
-                    using _fl = await LockFile.lock(`${globalEnv.serverID}-${process.pid}-img`);
-                    // resize...
-                    const ics = ServiceProvider.resolve(this, ImageConverterService);
-                    return await ics.transform(type, file, fileName );
-                }
-            });
+            // resize...
+            return await this.ics.transform(type, file, fileName );
         }
 
         if (/^webm\-branded?$/i.test(type)) {
-            return await this.cacheService.get({ key, ttl,
-                factory: async () => {
-                    file = await this.downloadFileContent(appFile, fileContentID);
-                    using _fl = await LockFile.lock(`${globalEnv.serverID}-video`);
-                    const ics = this;
-                    return await ics.webmBranded(file, senderDomain );
-                }
-            });
+            const ics = this;
+            return await ics.webmBranded(file, senderDomain );
         }
 
         if (/^webm/i.test(type)) {
-            return await this.cacheService.get({ key, ttl,
-                factory: async () => {
-                    file = await this.downloadFileContent(appFile, fileContentID);
-                    using _fl = await LockFile.lock(`${globalEnv.serverID}-video`);
-                    const ics = this;
-                    return await ics.webm(file );
-                }
-            });
+            return await this.webm(file );
         }
 
         if (/^(pdf|html)$/i.test(type)) {
-            return await this.cacheService.get({ key, ttl,
-                factory: async () => {
-                    file = await this.downloadFileContent(appFile, fileContentID);
-                    using _fl = await LockFile.lock(`${globalEnv.serverID}-doc`);
-                    const ics = this;
-                    return await ics[StringFormat.toCamelCase(type)](file, fileName );
-                }
-            });
+            return await this[StringFormat.toCamelCase(type)](file, fileName );
         }
 
-        return await this.downloadFileContent(appFile, fileContentID);
+        return input;
     }
 
     async pdf(file: LocalFile) {
@@ -86,7 +63,7 @@ export default class FileConversionService {
             return file;
         }
 
-        const output = await this.tempFileService.createTempFile(".pdf", file.fileName + ".pdf", "application/pdf");
+        const output = await tempDiskCache.createTempFile(".pdf", file.fileName + ".pdf", "application/pdf");
         await Convert.convert(file, "pdf", output.path);
         return output;
     }
@@ -96,7 +73,7 @@ export default class FileConversionService {
             return file;
         }
 
-        const output = await this.tempFileService.createTempFile(".html", file.fileName + ".html", "text/html");
+        const output = await tempDiskCache.createTempFile(".html", file.fileName + ".html", "text/html");
 
         if (/text\//.test(file.contentType)) {
 
@@ -131,7 +108,7 @@ export default class FileConversionService {
         if (/\.webm$/i.test(file.fileName)) {
             return file;
         }
-        const output = await this.tempFileService.createTempFile(".webm", file.fileName + ".webm", "video/webm");
+        const output = await tempDiskCache.createTempFile(".webm", file.fileName + ".webm", "video/webm");
         return FFCommand.webm(file, output);
     }
 
@@ -145,7 +122,7 @@ export default class FileConversionService {
         if (/\.webm$/i.test(file.fileName)) {
             return file;
         }
-        const output = await this.tempFileService.createTempFile(".webm", file.fileName + ".webm", "video/webm");
+        const output = await tempDiskCache.createTempFile(".webm", file.fileName + ".webm", "video/webm");
         return FFCommand.webmText(file, text, output);
     }
 
