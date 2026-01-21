@@ -45,6 +45,10 @@ export default class extends Page {
 
         const file = await this.fcs.downloadConvertedFile({ input, fileName, senderDomain, type  });
 
+        this.disposables.push({ [Symbol.dispose]() {
+            file[Symbol.asyncDispose]?.().catch?.(console.error);
+        }})
+
         return new TempFileResult(
             file, {
                 contentDisposition: type === "download"
