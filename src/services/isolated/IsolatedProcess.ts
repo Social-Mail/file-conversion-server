@@ -1,7 +1,7 @@
 import { fileURLToPath } from "url";
-import { spawnPromise } from "../common/spawnPromise.js";
 import IImageConverter from "./image-converter/IImageConverter.js";
 import IExtract from "./extract/IExtract.js";
+import { spawnPromise } from "../../core/spawnPromise.js";
 
 export default class IsolatedProcess {
 

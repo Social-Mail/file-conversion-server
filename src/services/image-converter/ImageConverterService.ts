@@ -1,4 +1,4 @@
-import Inject, { RegisterScoped } from "@entity-access/entity-access/dist/di/di.js";
+import { RegisterScoped } from "@entity-access/entity-access/dist/di/di.js";
 import { join, parse } from "path";
 import { LocalFile } from "@entity-access/server-pages/dist/core/LocalFile.js";
 import { Convert } from "../convert/Convert.js";
