@@ -16,12 +16,6 @@ export default class WebServer {
         let port = (process.env.PORT || "8080") as any;
         if (/^\d+$/.test(port)) {
             port = Number(port) as any;
-        } else {
-            const dir = dirname(port);
-            ensureDir(dir);
-            if(existsSync(port)) {
-                unlinkSync(port);
-            }
         }
 
         server.build({
