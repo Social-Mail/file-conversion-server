@@ -1,6 +1,7 @@
 import ServerPages from "@entity-access/server-pages/dist/ServerPages.js";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import ensureDir from "./core/FileApi.js";
 
 const server = ServerPages.create();
 
@@ -10,6 +11,9 @@ server.registerRoutes(
 let port = (process.env.PORT || "8080") as any;
 if (/^\d+$/.test(port)) {
     port = Number(port) as any;
+} else {
+    const dir = dirname(port);
+    ensureDir(dir);
 }
 
 server.build({
