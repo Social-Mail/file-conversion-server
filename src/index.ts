@@ -2,6 +2,7 @@ import ServerPages from "@entity-access/server-pages/dist/ServerPages.js";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import ensureDir from "./core/FileApi.js";
+import { existsSync, unlinkSync } from "node:fs";
 
 const server = ServerPages.create();
 
@@ -14,6 +15,9 @@ if (/^\d+$/.test(port)) {
 } else {
     const dir = dirname(port);
     ensureDir(dir);
+    if(existsSync(port)) {
+        unlinkSync(port);
+    }
 }
 
 server.build({
