@@ -28,6 +28,9 @@ export default class extends Page {
     fcs: FileConversionService;
 
     async run() {
+
+        console.log(`HTTP-in: ${this.request.url}`);
+
         const fileName = this.childPath[this.childPath.length-1];
         const { senderDomain, type } = this;
 

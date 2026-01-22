@@ -25,6 +25,8 @@ export default class extends Page {
 
     async run() {
 
+        console.log(`HTTP-in: ${this.request.url}`);
+
         const { code } = this;
 
         await using tf = tempDiskCache.createTempFile("code.webm", "video/webm");
