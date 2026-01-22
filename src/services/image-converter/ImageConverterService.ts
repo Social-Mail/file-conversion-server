@@ -106,8 +106,6 @@ export default class ImageConverterService {
 
     private async transformInternal(type, file: LocalFile, outputFileName = "file.jpg") {
 
-        let { ext } = parse(outputFileName);
-
         let fileName = type;
         const matches = type.match(/(\w+)\(?([^\)]*)\)?/);
         let args = [];
@@ -116,23 +114,10 @@ export default class ImageConverterService {
             args = matches[2].split(',').map( (x) => /^\d/.test(x) ? parseFloat(x) : x);
             switch(fileName) {
                 case "jpg":
-                    ext = ".jpg";
-                    fileName = "size";
-                    break;
                 case "png":
-                    ext = ".png";
-                    fileName = "size";
-                    break;
                 case "gif":
-                    ext = ".gif";
-                    fileName = "size";
-                    break;
                 case "webp":
-                    ext = ".webp";
-                    fileName = "size";
-                    break;
                 case "ico":
-                    ext = ".ico";
                     fileName = "size";
                     break;
             }
