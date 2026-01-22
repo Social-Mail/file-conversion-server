@@ -23,8 +23,7 @@ export default class TextExtractorService {
             const parsedEmail = await parser.parse(file, true);
             await outputFile.appendLine(parsedEmail.text);
             for (const iterator of parsedEmail.attachments) {
-                const { ext } = parse(iterator.filename || "file.dat");
-                const tf = await tempDiskCache.createTempFile(ext, iterator.filename, iterator.contentType);
+                const tf = await tempDiskCache.createTempFile(iterator.filename, iterator.contentType);
                 await tf.writeAll(iterator.content);
                 const t = await this.extract(tf);
                 if (t) {
