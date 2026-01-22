@@ -62,11 +62,12 @@ ENV SSL_CERT_DIR /cache/root-certs
 # USER root
 
 # RUN Server Now
-# WORKDIR /app
+WORKDIR /app
 COPY package*.json ./
 COPY index.js ./
 COPY src ./src
 COPY dist ./dist
+COPY content ./content
 ENV HOST=0.0.0.0
 ENV SELF_HOST=true
 ENV PORT=8484
