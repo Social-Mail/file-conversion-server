@@ -2,7 +2,7 @@ import path from "path";
 import BaseDiskCache from "./BaseDiskCache.js";
 import FileSize from "./FileSize.js";
 
-const tmpdir = path.join("/cache", "t");
+const tmpdir = path.join("/fcs/cache", "t");
 
 export const tempDiskCache = new BaseDiskCache({
     root: tmpdir,
