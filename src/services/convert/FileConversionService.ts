@@ -57,7 +57,7 @@ export default class FileConversionService {
             return file;
         }
 
-        const output = await tempDiskCache.createTempFile(".pdf", file.fileName + ".pdf", "application/pdf");
+        const output = await tempDiskCache.createTempFile(file.fileName + ".pdf", "application/pdf");
         await Convert.convert(file, "pdf", output.path);
         return output;
     }
@@ -67,7 +67,7 @@ export default class FileConversionService {
             return file;
         }
 
-        const output = await tempDiskCache.createTempFile(".html", file.fileName + ".html", "text/html");
+        const output = await tempDiskCache.createTempFile(file.fileName + ".html", "text/html");
 
         if (/text\//.test(file.contentType)) {
 
@@ -102,7 +102,7 @@ export default class FileConversionService {
         if (/\.webm$/i.test(file.fileName)) {
             return file;
         }
-        const output = await tempDiskCache.createTempFile(".webm", file.fileName + ".webm", "video/webm");
+        const output = await tempDiskCache.createTempFile(file.fileName + ".webm", "video/webm");
         return FFCommand.webm(file, output);
     }
 
@@ -116,7 +116,7 @@ export default class FileConversionService {
         if (/\.webm$/i.test(file.fileName)) {
             return file;
         }
-        const output = await tempDiskCache.createTempFile(".webm", file.fileName + ".webm", "video/webm");
+        const output = await tempDiskCache.createTempFile(file.fileName + ".webm", "video/webm");
         return FFCommand.webmText(file, text, output);
     }
 

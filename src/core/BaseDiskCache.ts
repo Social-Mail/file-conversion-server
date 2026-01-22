@@ -20,7 +20,7 @@ export interface IDiskCacheContainer {
 
 export default class BaseDiskCache {
 
-    createTempFile(ext: string, fileName: string, mimeType?: string) {
+    createTempFile(fileName: string, mimeType?: string) {
         const folder = join(this.root, randomUUID());
         ensureDir(folder);
         const path = join(folder, fileName);

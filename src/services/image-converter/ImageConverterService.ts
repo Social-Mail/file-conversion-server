@@ -23,7 +23,7 @@ export default class ImageConverterService {
             if (/(\.bmp|\.ico)$/i.test(file.fileName)) {
                 using f1 = tempDiskCache.newFolder("bpm-to-png");
                 copy = await f1.copy(file.fileName, file, file.contentType);
-                outputFile = await tempDiskCache.createTempFile(".png", "png", "image/png");
+                outputFile = await tempDiskCache.createTempFile("png.png", "image/png");
                 await spawnPromise("convert", [
                     copy.path,
                     outputFile.path
@@ -37,7 +37,7 @@ export default class ImageConverterService {
 
         using folder = tempDiskCache.newFolder("image-converter");
         copy = await folder.copy(file.fileName, file, file.contentType);
-        outputFile = await tempDiskCache.createTempFile(".png", "png", "image/png");
+        outputFile = await tempDiskCache.createTempFile("png.png", "image/png");
 
         if (/^video\//.test(file.contentType)) {
             // this is a video..
@@ -94,7 +94,7 @@ export default class ImageConverterService {
                 if (retry) {
                     // we will use vips to convert file to jpg
                     const { name } = parse(file.fileName);
-                    const output = await tempDiskCache.createTempFile(".png", name, "image/png");
+                    const output = await tempDiskCache.createTempFile( `${name}.png`, "image/png");
                     const modulePath = fileURLToPath(import.meta.resolve("./external/convert-heic.js"));
                     await spawnPromise(process.execPath, [ modulePath ], { env: { FILE_IN: file.path, FILE_OUT: output.path }});
                     return await this.transform(type, output, outputFileName, false);

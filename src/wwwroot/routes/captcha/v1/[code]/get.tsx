@@ -27,7 +27,7 @@ export default class extends Page {
 
         const { code } = this;
 
-        await using tf = tempDiskCache.createTempFile(".webm", "code", "video/webm");
+        await using tf = tempDiskCache.createTempFile("code.webm", "video/webm");
 
         const input = "/app/content/video/all.webm";
 
@@ -45,7 +45,7 @@ export default class extends Page {
             logCommand: false,
         });
 
-        const saveAs = tempDiskCache.createTempFile(".gif", "code", "image/gif")
+        const saveAs = tempDiskCache.createTempFile("code.gif", "image/gif")
 
         await spawnPromise("/ffmpeg/ffmpeg", [
             "-i", tf.path,
