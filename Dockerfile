@@ -69,10 +69,10 @@ ENTRYPOINT ["npm", "start"]
 
 # RUN Server Now
 WORKDIR /app
-COPY package*.json ./
 COPY content ./content
+COPY package*.json ./
+RUN npm i --omit=dev --include=optional sharp
 COPY index.js ./
 COPY src ./src
 COPY dist ./dist
 
-RUN npm i --omit=dev --include=optional sharp
