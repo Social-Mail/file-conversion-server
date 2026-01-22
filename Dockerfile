@@ -64,10 +64,10 @@ ENV SSL_CERT_DIR /cache/root-certs
 # RUN Server Now
 WORKDIR /app
 COPY package*.json ./
+COPY content ./content
 COPY index.js ./
 COPY src ./src
 COPY dist ./dist
-COPY content ./content
 ENV HOST=0.0.0.0
 ENV SELF_HOST=true
 ENV PORT=8484
