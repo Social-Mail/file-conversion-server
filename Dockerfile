@@ -73,6 +73,6 @@ ENV PORT=8484
 ENV NODE_TLS_REJECT_UNAUTHORIZED=0
 EXPOSE 8484
 
-RUN npm i --omit=dev
+RUN npm i --omit=dev --include=optional sharp
 
 ENTRYPOINT ["npm", "start"]
