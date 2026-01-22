@@ -60,6 +60,12 @@ ENV SSL_CERT_DIR /cache/root-certs
 
 
 # USER root
+ENV HOST=0.0.0.0
+ENV SELF_HOST=true
+ENV PORT=8484
+ENV NODE_TLS_REJECT_UNAUTHORIZED=0
+EXPOSE 8484
+ENTRYPOINT ["npm", "start"]
 
 # RUN Server Now
 WORKDIR /app
@@ -68,12 +74,5 @@ COPY content ./content
 COPY index.js ./
 COPY src ./src
 COPY dist ./dist
-ENV HOST=0.0.0.0
-ENV SELF_HOST=true
-ENV PORT=8484
-ENV NODE_TLS_REJECT_UNAUTHORIZED=0
-EXPOSE 8484
 
 RUN npm i --omit=dev --include=optional sharp
-
-ENTRYPOINT ["npm", "start"]
