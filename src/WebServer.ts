@@ -2,8 +2,6 @@
 import ServerPages from "@entity-access/server-pages/dist/ServerPages.js";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import ensureDir from "./core/FileApi.js";
-import { existsSync, unlinkSync } from "node:fs";
 
 export default class WebServer {
 
