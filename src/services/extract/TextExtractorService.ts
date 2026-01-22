@@ -15,7 +15,7 @@ export default class TextExtractorService {
 
         const { parser } = this;
 
-        const outputFile = await tempDiskCache.createTempFile(".txt", "file.txt");
+        const outputFile = await tempDiskCache.createTempFile("file.txt", "text/plain");
 
         const isEmail = file.contentType === "message/rfc822";
         if(isEmail) {

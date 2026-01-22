@@ -143,7 +143,7 @@ export default class ImageConverterService {
             file = ImagesFolder.localFile("png", "unavailable.png");
         }
 
-        const tf = await tempDiskCache.createTempFile(ext, outputFileName);
+        const tf = await tempDiskCache.createTempFile(outputFileName);
 
         const result = await IsolatedProcess.convertImage({
             type,
