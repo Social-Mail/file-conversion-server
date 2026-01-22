@@ -1,6 +1,5 @@
 import Inject, { RegisterScoped } from "@entity-access/entity-access/dist/di/di.js";
 import { LocalFile } from "@entity-access/server-pages/dist/core/LocalFile.js";
-import { parse } from "path";
 import { Extract } from "./Extract.js";
 import { tempDiskCache } from "../../core/tempDiskCache.js";
 import { FileType } from "../../core/FileType.js";
