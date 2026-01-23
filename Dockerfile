@@ -70,6 +70,7 @@ ENTRYPOINT ["npm", "start"]
 # RUN Server Now
 WORKDIR /app
 COPY content ./content
+COPY images ./images
 COPY package*.json ./
 RUN npm i --omit=dev --include=optional sharp
 COPY index.js ./
