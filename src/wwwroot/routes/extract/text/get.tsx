@@ -38,9 +38,7 @@ export default class extends Page {
 
         const file = await this.tes.extract(input);
 
-        this.disposables.push({ [Symbol.dispose]() {
-            file[Symbol.asyncDispose]?.().catch?.(console.error);
-        }})
+       this.registerDisposable(file);
 
         return new TempFileResult(
             file, {

@@ -58,9 +58,7 @@ export default class extends Page {
             logCommand: false,
         });
 
-        this.disposables.push({ [Symbol.dispose]() {
-            saveAs[Symbol.asyncDispose]().catch(console.error);
-        }})
+        this.registerDisposable(saveAs);
 
         return new TempFileResult(
             saveAs, {

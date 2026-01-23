@@ -24,7 +24,7 @@ export default class BaseDiskCache {
         const folder = join(this.root, randomUUID());
         ensureDir(folder);
         const path = join(folder, fileName);
-        return new LocalFile(path, fileName, mimeType, () => this.deleteFile(path).catch(console.error));
+        return new LocalFile(path, fileName, mimeType, () => this.deleteFolder(folder).catch(console.error));
     }
 
     protected readonly root: string;
@@ -204,6 +204,10 @@ export default class BaseDiskCache {
                 return;
             }
         }
+    }
+
+    protected async deleteFolder(folder) {
+        await spawnPromise("rm", ["-rf", folder]);
     }
 
     protected async clean() {
