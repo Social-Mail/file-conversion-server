@@ -2,9 +2,9 @@
 import { LocalFile } from "@entity-access/server-pages/dist/core/LocalFile.js";
 import ensureDir from "./FileApi.js";
 import fsp, { rm, rmdir, stat, unlink } from "node:fs/promises";
-import { existsSync, Stats } from "node:fs";
+import { existsSync, mkdirSync, Stats } from "node:fs";
 import { join, parse } from "node:path";
-import { randomUUID } from "node:crypto";
+import { randomBytes, randomUUID } from "node:crypto";
 import EntityAccessError from "@entity-access/entity-access/dist/common/EntityAccessError.js";
 import { toKMBString } from "./NumberFormats.js";
 import { spawnPromise } from "./spawnPromise.js";
@@ -18,11 +18,20 @@ export interface IDiskCacheContainer {
     cache: BaseDiskCache;
 }
 
+const newFolder = (root) => {
+    for(;;) {
+        const f = join(root, Date.now().toString(36) + "-" + randomBytes(8).readBigUInt64BE().toString(36));
+        if(!existsSync(f)) {
+            mkdirSync(f, { recursive: true});
+            return f;
+        }
+    }
+};
+
 export default class BaseDiskCache {
 
     createTempFile(fileName: string, mimeType?: string) {
-        const folder = join(this.root, randomUUID());
-        ensureDir(folder);
+        const folder = newFolder(this.root);
         const path = join(folder, fileName);
         return new LocalFile(path, fileName, mimeType, () => this.deleteFolder(folder).catch(console.error));
     }
