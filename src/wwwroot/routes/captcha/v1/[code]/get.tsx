@@ -4,6 +4,7 @@ import { Route } from "@entity-access/server-pages/dist/core/Route.js";
 import { spawnPromise } from "../../../../../core/spawnPromise.js";
 import { TempFileResult } from "@entity-access/server-pages/dist/Content.js";
 import { CORS } from "../../../../../core/CORS.js";
+import { LocalFile } from "@entity-access/server-pages/dist/core/LocalFile.js";
 
 const zero = '0'.charCodeAt(0);
 
@@ -29,7 +30,7 @@ export default class extends Page {
 
         const { code } = this;
 
-        await using tf = tempDiskCache.createTempFile("code.webm", "video/webm");
+        const tf = tempDiskCache.createTempFile("code.webm", "video/webm");
 
         const input = "/app/content/video/all.webm";
 
@@ -47,7 +48,7 @@ export default class extends Page {
             logCommand: false,
         });
 
-        const saveAs = tempDiskCache.createTempFile("code.gif", "image/gif")
+        const saveAs = new LocalFile(tf.path + ".gif", "code.webm.gif", "image/gif", () => void 0);
 
         await spawnPromise("/ffmpeg/ffmpeg", [
             "-i", tf.path,
@@ -58,7 +59,7 @@ export default class extends Page {
             logCommand: false,
         });
 
-        this.registerDisposable(saveAs);
+        this.registerDisposable(tf);
 
         return new TempFileResult(
             saveAs, {
