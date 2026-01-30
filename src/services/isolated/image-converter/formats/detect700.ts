@@ -1,6 +1,6 @@
 import sharp from "sharp";
 import type { Box, FaceDetection } from "face-api.js";
-import { loadImage } from "../../../../common/env.js";
+import { loadImageData } from "../../../../common/env.js";
 import { faceDetectionNet, faceDetectionOptions } from "../../../../common/faceDetection.js";
 import faceApi from "../../../../common/faceapi.js";
 
@@ -20,10 +20,9 @@ export default async function detect(input): Promise<IFace[]> {
     const imgSmall =
         await sharp(input)
         .resize({ height: 700 })
-        .png()
-        .toBuffer();
+        .png();
 
-    const img: any = await loadImage(imgSmall);
+    const img: any = await loadImageData(imgSmall);
     const detections: FaceDetection[] = await faceApi.detectAllFaces(img, faceDetectionOptions);
     return detections.map((s) => ({
         score: s.score,
