@@ -74,7 +74,6 @@ COPY models ./models
 COPY images ./images
 COPY package*.json ./
 RUN npm i --omit=dev --include=optional sharp
-RUN npm install canvas --build-from-source
 COPY index.js ./
 COPY src ./src
 COPY dist ./dist
