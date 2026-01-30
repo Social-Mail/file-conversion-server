@@ -1,5 +1,5 @@
 import sharp from "sharp";
-import type { Box, FaceDetection } from "face-api.js";
+import type { Box, FaceDetection } from "@vladmandic/face-api";
 import { Canvas, loadImageData } from "../../../../common/env.js";
 import { faceDetectionNet, faceDetectionOptions } from "../../../../common/faceDetection.js";
 import faceApi from "../../../../common/faceapi.js";
