@@ -3,15 +3,11 @@
 // import '@tensorflow/tfjs-node';
 // import "@tensorflow/tfjs-backend-webgl";
 import "@tensorflow/tfjs-backend-wasm";
-import * as faceapi from "@vladmandic/face-api/dist/face-api.esm.js";
-
+import * as faceapi from "./faceapi.js";
 
 // implements nodejs wrappers for HTMLCanvasElement, HTMLImageElement, ImageData
-import canvas = require("skia-canvas");
+import { Canvas, Image, ImageData, loadImage } from "skia-canvas";
 
-// patch nodejs environment, we need to provide an implementation of
-// HTMLCanvasElement and HTMLImageElement
-const { Canvas, Image, ImageData } = canvas as any;
 (faceapi as any).env.monkeyPatch({ Canvas, Image, ImageData });
 
-export { canvas };
+export { Canvas, Image, ImageData, loadImage };
