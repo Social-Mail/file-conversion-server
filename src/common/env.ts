@@ -3,7 +3,7 @@
 // import '@tensorflow/tfjs-node';
 // import "@tensorflow/tfjs-backend-webgl";
 import "@tensorflow/tfjs-backend-wasm";
-import * as faceapi from "./faceapi.js";
+import faceapi from "./faceapi.js";
 
 // implements nodejs wrappers for HTMLCanvasElement, HTMLImageElement, ImageData
 import { Canvas, Image, ImageData, loadImage } from "skia-canvas";
