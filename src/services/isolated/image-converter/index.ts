@@ -13,7 +13,7 @@ async function transform({
 
     let { ext } = parse(outputFileName);
     let fileName = type;
-    const matches = type.match(/(\w+)\(?([^\)]*)\)?/);
+    const matches = type.match(/([\w\-]+)\(?([^\)]*)\)?/);
     let args = [];
     if (matches) {
         fileName = matches[1];
