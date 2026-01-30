@@ -1,9 +1,8 @@
 import sharp from "sharp";
-import * as faceapi from "../../../../common/faceapi.js";
-const faceApi = faceapi as any;
 import { Box, FaceDetection } from "@vladmandic/face-api";
 import { canvas } from "../../../../common/env.js";
 import { faceDetectionNet, faceDetectionOptions } from "../../../../common/faceDetection.js";
+import faceApi from "../../../../common/faceapi.js";
 
 export interface IFace {
     score: number;

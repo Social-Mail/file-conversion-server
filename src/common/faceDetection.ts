@@ -1,4 +1,4 @@
-import * as faceApi from "@vladmandic/face-api/dist/face-api.esm.js";
+import faceApi from "./faceapi.js";
 
 const faceapi = faceApi as any;
 
