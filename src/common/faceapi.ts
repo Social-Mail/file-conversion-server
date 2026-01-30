@@ -1,3 +1,3 @@
-import * as faceApi from "@vladmandic/face-api/dist/face-api.node-cpu.js";
+import * as faceApi from "face-api.js";
 export default faceApi;
 
