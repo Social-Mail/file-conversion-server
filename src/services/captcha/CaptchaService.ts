@@ -4,8 +4,9 @@ import ensureDir from "../../core/FileApi.js";
 import FileSize from "../../core/FileSize.js";
 import { spawnPromise } from "../../core/spawnPromise.js";
 import { tempDiskCache } from "../../core/tempDiskCache.js";
+import path from "node:path";
 
-const captchaCache = "/cache/captcha";
+const captchaCache = path.join("/fcs/cache", "captcha");;
 ensureDir(captchaCache);
 
 const tempSize = FileSize.parse("10gb");
