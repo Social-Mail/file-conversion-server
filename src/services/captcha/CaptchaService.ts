@@ -6,7 +6,7 @@ import { spawnPromise } from "../../core/spawnPromise.js";
 import { tempDiskCache } from "../../core/tempDiskCache.js";
 import path from "node:path";
 
-const captchaCache = path.join("/fcs/cache", "captcha");;
+const captchaCache = path.join("/cache", "captcha");;
 ensureDir(captchaCache);
 
 const tempSize = FileSize.parse("10gb");
