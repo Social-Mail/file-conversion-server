@@ -19,8 +19,8 @@
   "author": "",
   "license": "UNLICENSED",
   "dependencies": {
-    "@entity-access/entity-access": "^1.0.535",
-    "@entity-access/server-pages": "^1.1.592",
+    "@entity-access/entity-access": "^1.1.4",
+    "@entity-access/server-pages": "^1.1.631",
     "@tensorflow/tfjs": "^3.7.0",
     "@tensorflow/tfjs-backend-wasm": "^3.7.0",
     "@vladmandic/face-api": "1.3.1",
