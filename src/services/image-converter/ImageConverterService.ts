@@ -132,6 +132,8 @@ export default class ImageConverterService {
 
         const tf = await tempDiskCache.createTempFile(outputFileName);
 
+        debugLog?.(`Sending input file ${file.path} to ${type}`);
+
         const result = await IsolatedProcess.convertImage({
             type,
             input: { path: file.path },

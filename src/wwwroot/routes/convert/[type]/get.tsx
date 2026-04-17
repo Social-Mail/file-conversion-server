@@ -47,7 +47,7 @@ export default class extends Page {
             input = new LocalFile(this.filePath, void 0, void 0, () => void 0);
         }
 
-        debugLog?.(`Converting file ${input}`);
+        debugLog?.(`Converting file ${input.path}`);
 
         const file = await this.fcs.downloadConvertedFile({ input, fileName, senderDomain, type  });
 
