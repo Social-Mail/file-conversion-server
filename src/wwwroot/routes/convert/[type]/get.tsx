@@ -9,7 +9,6 @@ import { CORS } from "../../../../core/CORS.js";
 import { tempDiskCache } from "../../../../core/tempDiskCache.js";
 import { parse } from "path";
 import { Readable } from "stream";
-import globalEnv from "../../../../globalEnv.js";
 import debugLog from "../../../../debugLog.js";
 
 export default class extends Page {
@@ -57,6 +56,8 @@ export default class extends Page {
         
 
         this.registerDisposable(file);
+
+        debugLog?.(`Sending ${file.path}`);
 
         return new TempFileResult(
             file, {
