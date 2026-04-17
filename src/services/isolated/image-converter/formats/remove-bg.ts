@@ -275,7 +275,7 @@ async function removeBackground({ inputPath, outputPath, modelPath, threshold = 
   return outputPath;
 }
 
-export { removeBackground };
+// export { removeBackground };
 
 
 export default async function (file: { path: string }, ... args: any[] ): Promise<sharp.Sharp> {
@@ -286,35 +286,16 @@ export default async function (file: { path: string }, ... args: any[] ): Promis
 
     try {
 
+      const modelPath = args[0] ?? "u2net.onnx";
+
         const input = file.path;
+        const output = await removeBackground({
+          inputPath: input,
+          outputPath: input + ".png",
+          modelPath: import.meta.resolve("../../../../models/" + modelPath),
+        })
 
-        if (args.length === 0) {
-            size.width = 0;
-            size.height = 0;
-        } else if (args.length === 1) {
-            // tslint:disable-next-line: no-bitwise
-            size.height = ~~args[0];
-        } else {
-            const [width, height, ... extra] = args;
-            // tslint:disable-next-line: no-bitwise
-            size.width = ~~width;
-            // tslint:disable-next-line: no-bitwise
-            size.height = ~~height;
-            size.fit = "cover";
-            for (let index = 0; index < extra.length / 2; index+=2) {
-                const key = extra[index];
-                const value = extra[index+1];
-                if(key && value) {
-                    size[key] = value;
-                }
-            }
-        }
-
-        if (size.height === 0 || size.width === 0) {
-            return await (sharp(input, { animated: true, pages: -1}).rotate() as any);
-        }
-        return await (sharp(input, { animated: true, pages: -1}).rotate() as any)
-        .resize(size);
+        return await sharp(output);
     } catch (e) {
         console.log(e.stack ?? e);
         const err = `${JSON.stringify(size)}\n${e.stack ? e.stack : e}`;
