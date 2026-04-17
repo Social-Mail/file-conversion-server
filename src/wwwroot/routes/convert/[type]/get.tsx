@@ -9,6 +9,7 @@ import { CORS } from "../../../../core/CORS.js";
 import { tempDiskCache } from "../../../../core/tempDiskCache.js";
 import { parse } from "path";
 import { Readable } from "stream";
+import globalEnv from "../../../../globalEnv.js";
 
 export default class extends Page {
 
@@ -46,7 +47,15 @@ export default class extends Page {
             input = new LocalFile(this.filePath, void 0, void 0, () => void 0);
         }
 
+        if (globalEnv.debug) {
+            console.log(`Converting file ${input}`);
+        }
+
         const file = await this.fcs.downloadConvertedFile({ input, fileName, senderDomain, type  });
+
+        if (globalEnv.debug) {
+            console.log(`File ${input} converted`);
+        }
 
         this.registerDisposable(file);
 
