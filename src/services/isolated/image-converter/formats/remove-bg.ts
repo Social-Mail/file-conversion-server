@@ -8,6 +8,8 @@ import LockFile from "../../../../core/LockFile.js";
 import { Readable } from "stream";
 import { tempDiskCache } from "../../../../core/tempDiskCache.js";
 import { cp } from "fs/promises";
+import { fileURLToPath } from "url";
+import { packageFolder } from "../../../../packageFolder.js";
 
 const INPUT_SIZE = 320;
 
@@ -291,7 +293,9 @@ export default async function (file: { path: string }, ...args: any[]): Promise<
     try {
 
         const modelName = "u2net.onnx";
-        const modelPath = import.meta.resolve("../../../../models/" + modelName);
+        const modelPath = packageFolder.resolveFile(`models/${modelName}`);
+
+        console.log(`exists ${modelPath}`);
 
         if (!existsSync(modelPath)) {
             using _lock = await LockFile.lock(modelName);
