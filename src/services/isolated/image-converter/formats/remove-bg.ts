@@ -8,7 +8,6 @@ import LockFile from "../../../../core/LockFile.js";
 import { Readable } from "stream";
 import { tempDiskCache } from "../../../../core/tempDiskCache.js";
 import { cp } from "fs/promises";
-import { fileURLToPath } from "url";
 import { packageFolder } from "../../../../packageFolder.js";
 
 const INPUT_SIZE = 320;
