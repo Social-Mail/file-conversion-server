@@ -1,10 +1,10 @@
 import { RegisterSingleton } from "@entity-access/entity-access/dist/di/di.js";
-import BaseDiskCache from "../../core/BaseDiskCache.js";
 import ensureDir from "../../core/FileApi.js";
 import FileSize from "../../core/FileSize.js";
 import { spawnPromise } from "../../core/spawnPromise.js";
 import { tempDiskCache } from "../../core/tempDiskCache.js";
 import path from "node:path";
+import BaseDiskCache from "@entity-access/server-pages/dist/cache/BaseDiskCache.js";
 
 const captchaCache = path.join("/cache", "captcha");;
 ensureDir(captchaCache);

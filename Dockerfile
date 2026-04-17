@@ -75,11 +75,11 @@ COPY models ./models
 COPY images ./images
 COPY package*.json ./
 
-WORKDIR /app/models
-RUN wget https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net.onnx
-RUN wget https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net_human_seg.onnx
-RUN wget https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net_cloth_seg.onnx
-WORKDIR /app
+# WORKDIR /app/models
+# RUN wget https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net.onnx
+# RUN wget https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net_human_seg.onnx
+# RUN wget https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net_cloth_seg.onnx
+# WORKDIR /app
 
 RUN npm i --omit=dev --include=optional sharp
 COPY index.js ./

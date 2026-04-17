@@ -1,5 +1,5 @@
 import path from "path";
-import BaseDiskCache from "./BaseDiskCache.js";
+import BaseDiskCache from "@entity-access/server-pages/dist/cache/BaseDiskCache.js";
 import FileSize from "./FileSize.js";
 
 const tmpdir = path.join("/fcs/cache", "t");
