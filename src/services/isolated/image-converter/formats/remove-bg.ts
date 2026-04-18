@@ -31,7 +31,11 @@ export default async function (file: { path: string }, ...args: any[]): Promise<
             switch(key) {
                 case "bgc":
                 case "extras":
-                params.set(key, v );
+                    params.set(key, v );
+                    break;
+                case "height":
+                    size.fit = "cover";
+                    size.height = Number(v);
                     break;
                 default:
                     body.append(key, v);
@@ -52,7 +56,11 @@ export default async function (file: { path: string }, ...args: any[]): Promise<
 
         const output = await r.arrayBuffer();
 
-        return await sharp(output);
+        let s = sharp(output);
+        if (size.fit) {
+            s = s.resize(size);
+        }
+        return await s;
     } catch (e) {
         console.log(e.stack ?? e);
         const err = `${JSON.stringify(size)}\n${e.stack ? e.stack : e}`;
