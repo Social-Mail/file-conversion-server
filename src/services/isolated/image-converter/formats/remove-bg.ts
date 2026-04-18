@@ -43,7 +43,14 @@ export default async function (file: { path: string }, ...args: any[]): Promise<
             }
         }
 
-        const buffer = await readFile(input);
+        let buffer = await readFile(input);
+
+        if (size.fit) {
+            buffer = Buffer.from(await sharp(buffer)
+                .resize(size)
+                .toFormat("jpg")
+                .toBuffer());
+        }
 
         const { base: fileName } = parse(file.path);
 
@@ -56,11 +63,7 @@ export default async function (file: { path: string }, ...args: any[]): Promise<
 
         const output = await r.arrayBuffer();
 
-        let s = sharp(output);
-        if (size.fit) {
-            s = s.resize(size);
-        }
-        return await s;
+        return await sharp(output);
     } catch (e) {
         console.log(e.stack ?? e);
         const err = `${JSON.stringify(size)}\n${e.stack ? e.stack : e}`;
