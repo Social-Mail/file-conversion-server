@@ -7,9 +7,6 @@ RUN apk add --no-cache openjdk8-jre openssl
 RUN apk add font-terminus font-inconsolata font-dejavu font-noto font-noto-cjk font-awesome font-noto-extra
 RUN apk add font-noto-emoji
 
-# for Onnx-Runtime for node
-RUN apk add --no-cache libc6-compat
-
 ARG APP_ROOT=/opt/app-root/src
 ENV NO_UPDATE_NOTIFIER=true \
     PATH="/usr/lib/libreoffice/program:${PATH}" \
