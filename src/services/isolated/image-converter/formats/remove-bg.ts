@@ -16,7 +16,9 @@ export default async function (file: { path: string }, ...args: any[]): Promise<
         const input = file.path;
         const url = new URL(`http://${globalEnv.removeBg.rembg.host}:${globalEnv.removeBg.rembg.port}/api/remove`);
 
+        const body = new FormData();
         const params = url.searchParams;
+
         for(let i=0;i<args.length;i+=2) {
             const key = args[i];
             if(!key) {
@@ -26,10 +28,15 @@ export default async function (file: { path: string }, ...args: any[]): Promise<
             if (v.startsWith('"')) {
                 v = JSON.parse(v);
             }
-            params.set(key, v );
+            switch(key) {
+                case "bgc":
+                case "extras":
+                params.set(key, v );
+                    break;
+                default:
+                    body.append(key, v);
+            }
         }
-
-        const body = new FormData();
 
         const buffer = await readFile(input);
 
