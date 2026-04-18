@@ -2,6 +2,7 @@
 import sharp from "sharp";
 import { parse } from "path";
 import IImageConverter from "./IImageConverter.js";
+import debugLog from "../../../debugLog.js";
 
 async function transform({
         type,
@@ -43,6 +44,9 @@ async function transform({
     }
 
     const { default: fx } = await import("./formats/" + fileName + ".js");
+
+    debugLog?.(`Invoking ${fileName}.js with ${input.path} and args [${args.join(",")}]`)
+
     let r: sharp.Sharp = await fx(input, ... args);
 
     switch(ext) {
