@@ -14,7 +14,7 @@ export default async function (file: { path: string }, ...args: any[]): Promise<
     try {
 
         const input = file.path;
-        const url = new URL(`http://${globalEnv.removeBg.rembg.host}:${globalEnv.removeBg.rembg.port}/7000/api`);
+        const url = new URL(`http://${globalEnv.removeBg.rembg.host}:${globalEnv.removeBg.rembg.port}/api/remove`);
 
         const params = url.searchParams;
         for(let i=0;i<args.length;i+=2) {
