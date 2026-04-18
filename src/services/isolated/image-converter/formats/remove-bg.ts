@@ -35,6 +35,7 @@ export default async function (file: { path: string }, ...args: any[]): Promise<
                     break;
                 default:
                     body.append(key, v);
+                    break;
             }
         }
 
