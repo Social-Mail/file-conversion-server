@@ -38,6 +38,7 @@ export default async function (file: { path: string }, ...args: any[]): Promise<
         body.append("file", new File([ buffer], fileName ))
 
         const r = await fetch(url, {
+            method: "POST",
             body
         });
 
