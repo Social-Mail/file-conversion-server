@@ -18,11 +18,15 @@ export default async function (file: { path: string }, ...args: any[]): Promise<
 
         const params = url.searchParams;
         for(let i=0;i<args.length;i+=2) {
+            const key = args[i];
+            if(!key) {
+                break;
+            }
             let v = args[i+1];
             if (v.startsWith('"')) {
                 v = JSON.parse(v);
             }
-            params.set(args[i], v );
+            params.set(key, v );
         }
 
         const body = new FormData();
