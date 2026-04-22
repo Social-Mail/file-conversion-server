@@ -31,7 +31,7 @@ export default class FileConversionService {
         const file = input;
 
         // transform here...
-        if (/^(size|jpg|png|webp|gif|face\-circle|remove-bg)\(?/i.test(type)) {
+        if (/^(size|jpg|png|webp|gif|face\-circle|remove-bg|max)\(?/i.test(type)) {
             // resize...
             return await this.ics.transform(type, file, fileName );
         }
