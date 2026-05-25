@@ -6,6 +6,7 @@ import FFCommand from "./FFCommand.js";
 import StringFormat from "../../core/StringFormat.js";
 import ImageConverterService from "../image-converter/ImageConverterService.js";
 import { tempDiskCache } from "../../core/tempDiskCache.js";
+import LockFile from "../../core/LockFile.js";
 
 interface IDownloadConvertedFile {
     input: LocalFile;
@@ -107,7 +108,8 @@ export default class FileConversionService {
             return file;
         }
         const output = await tempDiskCache.createTempFile(file.fileName + ".webm");
-        return FFCommand.webm(file, output);
+        using _lock = await LockFile.lock("video-" + process.pid);
+        return await FFCommand.webm(file, output);
     }
 
     async mp4(file: LocalFile) {
@@ -118,7 +120,8 @@ export default class FileConversionService {
             return file;
         }
         const output = await tempDiskCache.createTempFile(file.fileName + ".mp4");
-        return FFCommand.mp4(file, output);
+        using _lock = await LockFile.lock("video-" + process.pid);
+        return await FFCommand.mp4(file, output);
     }
 
     async webmBranded(file: LocalFile, senderDomain) {
