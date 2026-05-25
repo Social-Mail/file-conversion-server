@@ -4,6 +4,40 @@ import { contentFolder } from "../../core/ImagesFolder.js";
 
 export default class FFCommand {
 
+    static async mp4(file: LocalFile, output: LocalFile, args: string[] = []) {
+        /**
+         * https://stackoverflow.com/questions/6954845/how-to-create-a-webm-video-file
+         * */
+        await spawnPromise("/ffmpeg/ffmpeg", [
+            "-i",
+            file.path,
+            "-vf",
+            "scale=1280:-2",
+            "-c:v",
+            "libx264",
+            "-crf",
+            "23",
+            "-profile:v",
+            "high",
+            "-level",
+            "4.1",
+            "-pix_fmt",
+            "yuv420p",
+            "-c:a",
+            "aac",
+            "-b:a",
+            "128k",
+            "-movflags",
+            "+faststart",
+            ... args,
+            "-y",
+            output.path
+        ]);
+
+        return output;
+    }
+
+
     static async webm(file: LocalFile, output: LocalFile, args: string[] = []) {
         /**
          * https://stackoverflow.com/questions/6954845/how-to-create-a-webm-video-file

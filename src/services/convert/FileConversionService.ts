@@ -45,6 +45,10 @@ export default class FileConversionService {
             return await this.webm(file );
         }
 
+        if (/^mp4/i.test(type)) {
+            return await this.webm(file );
+        }
+
         if (/^(pdf|html)$/i.test(type)) {
             return await this[StringFormat.toCamelCase(type)](file, fileName );
         }
@@ -104,6 +108,17 @@ export default class FileConversionService {
         }
         const output = await tempDiskCache.createTempFile(file.fileName + ".webm");
         return FFCommand.webm(file, output);
+    }
+
+    async mp4(file: LocalFile) {
+        if (!/^(video|audio)\//i.test(file.contentType)) {
+            throw new Error("Not an audio or video file");
+        }
+        if (/\.mp4$/i.test(file.fileName)) {
+            return file;
+        }
+        const output = await tempDiskCache.createTempFile(file.fileName + ".mp4");
+        return FFCommand.mp4(file, output);
     }
 
     async webmBranded(file: LocalFile, senderDomain) {
