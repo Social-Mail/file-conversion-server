@@ -29,30 +29,33 @@ export default class FileConversionService {
         senderDomain
     }: IDownloadConvertedFile ): Promise<LocalFile> {
 
-        using _lock = await LockFile.lock("file-conversion-" + process.pid);
-
         const file = input;
 
         // transform here...
         if (/^(size|jpg|png|webp|gif|face\-circle|remove-bg|max)\(?/i.test(type)) {
             // resize...
+            using _lock = await LockFile.lock("image-conversion-" + process.pid);
             return await this.ics.transform(type, file, fileName );
         }
 
         if (/^webm\-branded?$/i.test(type)) {
             const ics = this;
+            using _lock = await LockFile.lock("video-conversion-" + process.pid);
             return await ics.webmBranded(file, senderDomain );
         }
 
         if (/^webm/i.test(type)) {
+            using _lock = await LockFile.lock("video-conversion-" + process.pid);
             return await this.webm(file );
         }
 
         if (/^mp4/i.test(type)) {
+            using _lock = await LockFile.lock("video-conversion-" + process.pid);
             return await this.webm(file );
         }
 
         if (/^(pdf|html)$/i.test(type)) {
+            using _lock = await LockFile.lock("pdf-conversion-" + process.pid);
             return await this[StringFormat.toCamelCase(type)](file, fileName );
         }
 
