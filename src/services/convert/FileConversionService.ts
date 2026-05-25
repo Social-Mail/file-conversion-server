@@ -29,6 +29,8 @@ export default class FileConversionService {
         senderDomain
     }: IDownloadConvertedFile ): Promise<LocalFile> {
 
+        using _lock = await LockFile.lock("file-conversion-" + process.pid);
+
         const file = input;
 
         // transform here...
@@ -108,7 +110,6 @@ export default class FileConversionService {
             return file;
         }
         const output = await tempDiskCache.createTempFile(file.fileName + ".webm");
-        using _lock = await LockFile.lock("video-" + process.pid);
         return await FFCommand.webm(file, output);
     }
 
@@ -120,7 +121,6 @@ export default class FileConversionService {
             return file;
         }
         const output = await tempDiskCache.createTempFile(file.fileName + ".mp4");
-        using _lock = await LockFile.lock("video-" + process.pid);
         return await FFCommand.mp4(file, output);
     }
 
