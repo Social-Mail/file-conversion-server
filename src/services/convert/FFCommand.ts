@@ -51,6 +51,7 @@ export default class FFCommand {
             "-q:v", "82",
             "-g", "60",
             "-preset", "picture",
+            "-loop", "0",
             ... args,
             "-y",
             output.path
