@@ -38,6 +38,28 @@ export default class FFCommand {
     }
 
 
+    static async webpAnimated(file: LocalFile, output: LocalFile, args: string[] = []) {
+        /**
+         * https://stackoverflow.com/questions/6954845/how-to-create-a-webm-video-file
+         * */
+        await spawnPromise("/ffmpeg/ffmpeg", [
+            "-i",
+            file.path,
+            "-vcodec","libwebp",
+            "-lossless", "0",
+            "-compression_level", "6",
+            "-q:v", "82",
+            "-g", "60",
+            "-preset", "picture",
+            ... args,
+            "-y",
+            output.path
+        ]);
+
+        return output;
+    }
+
+
     static async webm(file: LocalFile, output: LocalFile, args: string[] = []) {
         /**
          * https://stackoverflow.com/questions/6954845/how-to-create-a-webm-video-file

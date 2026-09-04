@@ -31,6 +31,12 @@ export default class FileConversionService {
 
         const file = input;
 
+        if(/^webp\-animated$/i.test(type)) {
+            const ics = this;
+            using _lock = await LockFile.lock("video-conversion-" + process.pid);
+            return await ics.webpAnimated(file);
+        }
+
         // transform here...
         if (/^(size|jpg|png|webp|gif|face\-circle|remove-bg|max)\(?/i.test(type)) {
             // resize...
@@ -115,6 +121,17 @@ export default class FileConversionService {
         const output = await tempDiskCache.createTempFile(file.fileName + ".webm");
         return await FFCommand.webm(file, output);
     }
+
+    async webpAnimated(file: LocalFile) {
+        if (/\.webp$/i.test(file.fileName)) {
+            return file;
+        }
+        if (!/^(video|audio)\//i.test(file.contentType)) {
+            throw new Error("Not an audio or video file");
+        }
+        const output = await tempDiskCache.createTempFile(file.fileName + ".webp");
+        return await FFCommand.webpAnimated(file, output);
+    }    
 
     async mp4(file: LocalFile) {
         if (!/^(video|audio)\//i.test(file.contentType)) {
