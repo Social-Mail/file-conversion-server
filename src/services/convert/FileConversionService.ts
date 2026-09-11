@@ -27,7 +27,7 @@ export default class FileConversionService {
         const file = input;
 
         // transform here...
-        if (/^(size|jpg|png|webp|gif|face\-circle|remove-bg|max)\(?/i.test(type)) {
+        if (/^(size|jpg|png|webp|gif|face\-circle|remove-bg|max|avif)\(?/i.test(type)) {
             // resize...
             using _lock = await LockFile.lock("image-conversion-" + process.pid);
             return await this.ics.transform(type, file, fileName );
