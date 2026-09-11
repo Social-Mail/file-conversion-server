@@ -24,7 +24,7 @@ export default class LockFile implements Disposable {
         const sha256 = createHash("sha256");
         const hash = sha256.update(someKey).digest("hex");
 
-        const lockFile = join(lockFolder, hash + ".lock");
+        const lockFile = join(lockFolder, hash + process.pid +  ".lock");
 
         let now = Date.now();
         const till = now + timeout;
