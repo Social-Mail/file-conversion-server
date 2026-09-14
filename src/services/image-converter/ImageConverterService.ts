@@ -120,6 +120,7 @@ export default class ImageConverterService {
                 case "gif":
                 case "webp":
                 case "ico":
+                case "avif":
                     fileName = "size";
                     break;
             }

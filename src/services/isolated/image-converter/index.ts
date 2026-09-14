@@ -40,6 +40,10 @@ async function transform({
                 ext = ".ico";
                 fileName = "size";
                 break;
+            case "avif":
+                ext = ".avif";
+                fileName = "size";
+                break;
         }
     }
 
@@ -66,6 +70,11 @@ async function transform({
             break;
         case ".gif":
             r = r.gif();
+            break;
+        case ".avif":
+            r = r.avif({
+                quality: 95
+            })
             break;
     }
 
