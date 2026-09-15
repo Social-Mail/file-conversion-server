@@ -1,11 +1,11 @@
 /* eslint-disable no-bitwise */
 
-import sharp from "sharp";
+import sharp, { Sharp } from "sharp";
 import globalEnv from "../../../../globalEnv.js";
 import { readFile } from "fs/promises";
 import { parse } from "path";
 
-export default async function (file: { path: string }, ...args: any[]): Promise<sharp.Sharp> {
+export default async function (file: { path: string }, ...args: any[]): Promise<Sharp> {
 
     const size = {
         failOnError: false,
@@ -48,7 +48,7 @@ export default async function (file: { path: string }, ...args: any[]): Promise<
         if (size.fit) {
             buffer = Buffer.from(await sharp(buffer)
                 .resize(size)
-                .toFormat("jpg")
+                .toFormat("jpeg")
                 .toBuffer());
         }
 

@@ -8,6 +8,7 @@
         "outDir": "dist",
         "rootDir": "./src",
         "strict": false,
+        "tsBuildInfoFile": "./dist/.tsbuildinfo",
         "skipDefaultLibCheck": true,
         "skipLibCheck": true,
         "experimentalDecorators": true,

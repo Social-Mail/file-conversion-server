@@ -1,8 +1,8 @@
 /* eslint-disable no-bitwise */
-import sharp from "sharp";
+import sharp, { Sharp } from "sharp";
 import detect from "./detect700.js";
 
-export default async function (file: { path: string }, ... args: any[] ): Promise<sharp.Sharp> {
+export default async function (file: { path: string }, ... args: any[] ): Promise<Sharp> {
 
     const size = {
         failOnError: false,

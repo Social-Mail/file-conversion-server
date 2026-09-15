@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import sharp from "sharp";
+import { Sharp } from "sharp";
 import { parse } from "path";
 import IImageConverter from "./IImageConverter.js";
 import debugLog from "../../../debugLog.js";
@@ -51,7 +51,7 @@ async function transform({
 
     debugLog?.(`Invoking ${fileName}.js with ${input.path} and args [${args.join(",")}]`)
 
-    let r: sharp.Sharp = await fx(input, ... args);
+    let r: Sharp = await fx(input, ... args);
 
     switch(ext) {
         case ".jpg":
