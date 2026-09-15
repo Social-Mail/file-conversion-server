@@ -1,7 +1,7 @@
 import { Route } from "@entity-access/server-pages/dist/core/Route.js";
 import LockFile from "../../../../core/LockFile.js";
 import { spawnPromise } from "../../../../core/spawnPromise.js";
-import BaseConverterPage from "../BaseConverterPage.js";
+import BaseConverterPage, { IConvertParams } from "../BaseConverterPage.js";
 
 export default class extends BaseConverterPage {
 
@@ -12,14 +12,16 @@ export default class extends BaseConverterPage {
         input,
         output,
         args
-    }) {
+    }: IConvertParams) {
 
         using _lock = await LockFile.lock("video-conversion");
 
         const { size } = this;
 
+        const prefix = input.path.endsWith(".avif") ? ["-f", "mp4"] : []; 
+
         await spawnPromise("/ffmpeg/ffmpeg", [
-            "-f", "avif",
+            ... prefix,
             "-i",
             input.path,
             "-vf", `scale='if(gt(ih,${size}),-2,iw)':'if(gt(ih,${size}),${size},ih)'`,
