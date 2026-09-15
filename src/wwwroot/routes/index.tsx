@@ -14,23 +14,15 @@ export default class extends Page {
             </head>
             <body>
                 <WebAtomsLogo/>
-                Following protocol methods are available.
+                Following methods are available.
 
-                <h1>Screen Shot</h1>
+                <h1>Convert</h1>
                 <section>
-                    <form action="/screen-shot" method="get" target="_blank">
+                    <form action="/convert/avif(250)/output.avif" method="get" target="_blank">
                         <fieldset>
                             <legend>Url</legend>
-                            <input name="url" value="https://"/>
+                            <input name="sourceUrl" value="https://"/>
                         </fieldset>
-                        <fieldset>
-                            <legend>Output</legend>
-                            <select name="output">
-                                <option selected="true" value="webp">WebP</option>
-                                <option value="png">PNG</option>
-                                <option value="pdf">PDF</option>
-                            </select>
-                         </fieldset>
                         <button type="submit">Go</button>
                     </form>
                 </section>

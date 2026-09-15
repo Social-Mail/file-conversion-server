@@ -11,7 +11,7 @@
     "postversion": "git push --follow-tags",
     "start": "node --enable-source-maps ./index.js",
     "debug": "node --enable-source-maps --inspect=0.0.0.0:9229 ./index.js",
-    "dev": "node --enable-source-maps --inspect=0.0.0.0:9229 ./dev.js"
+    "dev": "node --enable-source-maps --inspect=0.0.0.0:9229 ./dist/dev.js"
   },
   "bin": {
     "puppeteer-server": "./bin/index.js"
