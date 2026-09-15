@@ -21,7 +21,6 @@ export default class extends BaseConverterPage {
 
         const ffprobe = spawnSync('/ffmpeg/ffprobe', [
             '-v', 'error',
-            '-f', 'mov',
             '-show_entries', 'stream=index:stream_tags=handler_name',
             '-of', 'json',
             input.path
@@ -55,7 +54,6 @@ export default class extends BaseConverterPage {
 
         await spawnPromise("/ffmpeg/ffmpeg", [
             "-r", "25",
-            "-f", "mov",
             "-i",
             input.path,
             '-map', streamIndex,
