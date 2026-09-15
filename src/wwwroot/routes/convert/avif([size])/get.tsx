@@ -2,6 +2,8 @@ import { Route } from "@entity-access/server-pages/dist/core/Route.js";
 import LockFile from "../../../../core/LockFile.js";
 import { spawnPromise } from "../../../../core/spawnPromise.js";
 import BaseConverterPage, { IConvertParams } from "../BaseConverterPage.js";
+import { link } from "node:fs/promises";
+import { unlinkSync } from "node:fs";
 
 export default class extends BaseConverterPage {
 
@@ -18,12 +20,27 @@ export default class extends BaseConverterPage {
 
         const { size } = this;
 
-        const prefix = input.path.endsWith(".avif") ? ["-f", "mp4"] : []; 
+        let inputFile = input.path;
+
+        if(input.path.endsWith(".avif")) {
+            inputFile += ".mp4";
+            // rename to mp4 and assume ffmpeg will work correctly?
+            await link (input.path, inputFile);
+            this.registerDisposable({
+                [Symbol.dispose]() {
+                    try {
+                        unlinkSync(inputFile);
+                    } catch {
+
+                    }
+                }
+            });
+        }
+
 
         await spawnPromise("/ffmpeg/ffmpeg", [
-            ... prefix,
             "-i",
-            input.path,
+            inputFile,
             "-vf", `scale='if(gt(ih,${size}),-2,iw)':'if(gt(ih,${size}),${size},ih)'`,
             "-c:v", "libsvtav1",
             "-crf", "12",
