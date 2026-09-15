@@ -20,22 +20,22 @@ export default class extends BaseConverterPage {
 
         const { size } = this;
 
-        let inputFile = input.path;
+        const inputFile = input.path;
 
-        if(input.path.endsWith(".avif")) {
-            inputFile += ".mp4";
-            // rename to mp4 and assume ffmpeg will work correctly?
-            await link (input.path, inputFile);
-            this.registerDisposable({
-                [Symbol.dispose]() {
-                    try {
-                        unlinkSync(inputFile);
-                    } catch {
+        // if(input.path.endsWith(".avif")) {
+        //     inputFile += ".mp4";
+        //     // rename to mp4 and assume ffmpeg will work correctly?
+        //     await link (input.path, inputFile);
+        //     this.registerDisposable({
+        //         [Symbol.dispose]() {
+        //             try {
+        //                 unlinkSync(inputFile);
+        //             } catch {
 
-                    }
-                }
-            });
-        }
+        //             }
+        //         }
+        //     });
+        // }
 
 
         await spawnPromise("/ffmpeg/ffmpeg", [
