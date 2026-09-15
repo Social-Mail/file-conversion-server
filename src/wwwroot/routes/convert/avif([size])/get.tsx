@@ -40,7 +40,6 @@ export default class extends BaseConverterPage {
         await spawnPromise("/ffmpeg/ffmpeg", [
             "-i",
             inputFile,
-            `-map`,`0:v:1?`,`-map`,`0:v:0`,`-disposition:v:0 none`,
             "-vf", `scale='if(gt(ih,${size}),-2,iw)':'if(gt(ih,${size}),${size},ih)'`,
             "-c:v", "libsvtav1",
             "-crf", "12",
