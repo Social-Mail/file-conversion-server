@@ -38,6 +38,7 @@ export default class extends BaseConverterPage {
 
 
         await spawnPromise("/ffmpeg/ffmpeg", [
+            "-r", "25",
             "-i",
             inputFile,
             "-vf", `scale='if(gt(ih,${size}),-2,iw)':'if(gt(ih,${size}),${size},ih)'`,
