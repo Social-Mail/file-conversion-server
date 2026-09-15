@@ -35,6 +35,10 @@ export default class extends Page {
         const fileName = this.childPath[this.childPath.length-1];
         const { senderDomain, type } = this;
 
+        if(type.startsWith("avif")) {
+            // for animated we need to use ffmpeg...
+        }
+
         let input = null as LocalFile;
 
         if (this.sourceUrl) {
