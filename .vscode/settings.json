@@ -37,6 +37,7 @@
         "domainkey",
         "dompurify",
         "EMAILID",
+        "ffprobe",
         "fileupload",
         "fontawesome",
         "grapesjs",
