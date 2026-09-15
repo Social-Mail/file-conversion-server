@@ -2,6 +2,7 @@ import { Route } from "@entity-access/server-pages/dist/core/Route.js";
 import LockFile from "../../../../core/LockFile.js";
 import { spawnPromise } from "../../../../core/spawnPromise.js";
 import BaseConverterPage, { IConvertParams } from "../BaseConverterPage.js";
+import { unlinkSync } from "fs";
 
 export default class extends BaseConverterPage {
 
@@ -18,22 +19,22 @@ export default class extends BaseConverterPage {
 
         const { size } = this;
 
-        const inputFile = input.path;
+        let inputFile = input.path;
 
-        // if(input.path.endsWith(".avif")) {
-        //     inputFile += ".mp4";
-        //     // rename to mp4 and assume ffmpeg will work correctly?
-        //     await link (input.path, inputFile);
-        //     this.registerDisposable({
-        //         [Symbol.dispose]() {
-        //             try {
-        //                 unlinkSync(inputFile);
-        //             } catch {
+        if(input.path.endsWith(".avif")) {
+            inputFile = input.path + ".y4m";
+            // rename to mp4 and assume ffmpeg will work correctly?
+            await spawnPromise("avifdec", [input.path, inputFile]);
+            this.registerDisposable({
+                [Symbol.dispose]() {
+                    try {
+                        unlinkSync(inputFile);
+                    } catch {
 
-        //             }
-        //         }
-        //     });
-        // }
+                    }
+                }
+            });
+        }
 
 
         await spawnPromise("/ffmpeg/ffmpeg", [

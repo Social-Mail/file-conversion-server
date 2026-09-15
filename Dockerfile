@@ -31,7 +31,8 @@ RUN apk add 7zip \
     freetype \
     harfbuzz \
     ca-certificates \
-    ttf-freefont
+    ttf-freefont \
+    libavif-apps
 
 ## Install Puppeteer
 # RUN apk add --no-cache \
