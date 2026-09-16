@@ -30,22 +30,22 @@ export default class extends BaseConverterPage {
 
         if (ffprobe.status === 0) {
             try {
-            const data = JSON.parse(ffprobe.stdout.toString());
-            if (data.streams && data.streams.length > 0) {
-                // Look for the track labeled as the video track or animation track
-                // Usually, the thumbnail stream does not have a "Still Image" handler tag,
-                // or the animation track is the one at index 1 or 2.
-                // We dynamically locate the highest index video track or look for non-thumbnail streams.
-                const videoStreams = data.streams;
-                
-                if (videoStreams.length > 1) {
-                // If there are multiple streams, the animation track is structurally the last stream
-                streamIndex = `0:${videoStreams[videoStreams.length - 1].index}`;
-                } else {
-                // If there's only 1 stream, map the first available video track
-                streamIndex = '0:v:0';
+                const data = JSON.parse(ffprobe.stdout.toString());
+                if (data.streams && data.streams.length > 0) {
+                    // Look for the track labeled as the video track or animation track
+                    // Usually, the thumbnail stream does not have a "Still Image" handler tag,
+                    // or the animation track is the one at index 1 or 2.
+                    // We dynamically locate the highest index video track or look for non-thumbnail streams.
+                    const videoStreams = data.streams;
+                    
+                    if (videoStreams.length > 1) {
+                        // If there are multiple streams, the animation track is structurally the last stream
+                        streamIndex = `0:${videoStreams[videoStreams.length - 1].index}`;
+                    } else {
+                        // If there's only 1 stream, map the first available video track
+                        streamIndex = '0:v:0';
+                    }
                 }
-            }
             } catch (e) {
             console.log('Failed to parse ffprobe JSON, using default stream fallback.');
             }
@@ -53,7 +53,6 @@ export default class extends BaseConverterPage {
 
 
         await spawnPromise("/ffmpeg/ffmpeg", [
-            "-r", "25",
             "-i",
             input.path,
             '-map', streamIndex,
@@ -61,7 +60,6 @@ export default class extends BaseConverterPage {
             "-c:v", "libsvtav1",
             "-crf", "12",
             "-an",
-            "-f", "avif",
             "-loop", "0",
             ... args,
             "-y",
