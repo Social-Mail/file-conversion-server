@@ -64,4 +64,43 @@ export default class CaptchaService  {
             });
         });
     }
+
+    
+    async getAvif(code: string) {
+        return this.diskCache.getOrCreateAsync(code + ".gif", async (cf) => {
+
+            const input = "/app/content/video/all.webm";
+            const tf = tempDiskCache.createTempFile("code.webm", "video/webm");            
+            await spawnPromise("/ffmpeg/ffmpeg", [
+                "-ss", ((code.charCodeAt(0) - zero) * 3.5).toString(), "-t", "3.5", "-i", input,
+                "-ss", ((code.charCodeAt(1) - zero) * 3.5).toString(), "-t", "3.5", "-i", input,
+                "-ss", ((code.charCodeAt(2) - zero) * 3.5).toString(), "-t", "3.5", "-i", input,
+                "-ss", ((code.charCodeAt(3) - zero) * 3.5).toString(), "-t", "3.5", "-i", input,
+                "-ss", ((code.charCodeAt(4) - zero) * 3.5).toString(), "-t", "3.5", "-i", input,
+                "-filter_complex", filter,
+                "-map", "[v]",
+                    "-y", tf.path
+            ], {
+                logData: false,
+                logCommand: false,
+            });
+        
+            await spawnPromise("/ffmpeg/ffmpeg", [
+                "-i",
+                tf.path,
+                "-vf", "fps=15,scale=300:-1",
+                "-c:v", "libsvtav1",
+                "-crf", "22",
+                "-cpu-used", "0",
+                "-tune", "ssim",
+                "-an",
+                "-loop", "0",
+                "-y",
+                cf.path
+            ],{
+                logData: false,
+                logCommand: false,
+            });
+        });
+    }
 }
