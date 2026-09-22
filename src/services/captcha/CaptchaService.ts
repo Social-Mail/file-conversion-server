@@ -67,7 +67,7 @@ export default class CaptchaService  {
 
     
     async getAvif(code: string) {
-        return this.diskCache.getOrCreateAsync(code + ".gif", async (cf) => {
+        return this.diskCache.getOrCreateAsync(code + ".avif", async (cf) => {
 
             const input = "/app/content/video/all.webm";
             const tf = tempDiskCache.createTempFile("code.webm", "video/webm");            
