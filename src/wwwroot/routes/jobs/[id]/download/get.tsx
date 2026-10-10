@@ -22,6 +22,8 @@ export default class extends Page {
             return this.notFound(true);
         }
 
+        console.log(`Sending file ${output.path}`);
+
         return new TempFileResult(output);
 
     }
