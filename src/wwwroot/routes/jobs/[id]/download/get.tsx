@@ -16,9 +16,10 @@ export default class extends Page {
 
         const { outputFileName } = jobInfo;
 
-        const output = await job.get(outputFileName);
+        const output = job.get(outputFileName);
 
         if(!output.exists) {
+            console.log(`File not found ${output.path}`);
             return this.notFound(true);
         }
 
