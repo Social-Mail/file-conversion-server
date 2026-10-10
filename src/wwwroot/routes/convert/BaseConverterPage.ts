@@ -1,5 +1,5 @@
 import Inject from "@entity-access/entity-access/dist/di/di.js";
-import { TempFileResult } from "@entity-access/server-pages/dist/Content.js";
+import Content, { TempFileResult } from "@entity-access/server-pages/dist/Content.js";
 import { LocalFile } from "@entity-access/server-pages/dist/core/LocalFile.js";
 import { Query } from "@entity-access/server-pages/dist/core/Query.js";
 import Page from "@entity-access/server-pages/dist/Page.js";
@@ -82,6 +82,8 @@ export default abstract class BaseConverterPage extends Page {
         
         if(!this.outputPath) {
             this.registerDisposable(file);
+        } else {
+            return Content.nativeJson({});
         }
 
         debugLog?.(`Sending ${file.path}`);
