@@ -35,6 +35,9 @@ export default abstract class BaseConverterPage extends Page {
     @Query
     args: string;
 
+    @Query
+    outputPath: string;
+
     @Inject
     fcs: FileConversionService;
 
@@ -66,7 +69,9 @@ export default abstract class BaseConverterPage extends Page {
 
         debugLog?.(`Converting file ${input.path}`);
 
-        const output = await tempDiskCache.createTempFile(fileName);
+        const output = this.outputPath
+            ? await tempDiskCache.create(this.outputPath)
+            : await tempDiskCache.createTempFile(fileName);
 
         const args = JSON.parse(this.args || "[]");
 

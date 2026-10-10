@@ -1,5 +1,11 @@
-const globalEnv = {
 
+let port = (process.env.PORT || "8080") as any;
+if(/^\d+$/i.test(port)) {
+    port = Number(port);
+}
+
+const globalEnv = {
+    port,
     debug: /yes|true/i.test(process.env.FCS_DEBUG),
     removeBg: {
         rembg: {
