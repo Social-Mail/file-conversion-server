@@ -11,13 +11,13 @@ const numCPUs = process.env.SOCIAL_MAIL_CLUSTER_WORKERS
 export default class WebCluster extends ClusterInstance<typeof WebServer> {
 
     public static start(arg: typeof WebServer = WebServer) {
-        UnixSocketPath.clearSockets();
         const c = new WebCluster();
         c.run(arg);
     }
 
     protected async runPrimary(): Promise<void> {
 
+        UnixSocketPath.clearSockets();
         while(true) {
             const workers = [] as RecycledWorker[];
             console.log(`Creating cluster ${numCPUs} workers`);
