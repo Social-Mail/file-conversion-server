@@ -10,6 +10,7 @@ import { tempDiskCache } from "../../../core/tempDiskCache.js";
 import debugLog from "../../../debugLog.js";
 import FileConversionService from "../../../services/convert/FileConversionService.js";
 import EntityAccessError from "@entity-access/entity-access/dist/common/EntityAccessError.js";
+import { link } from "fs/promises";
 
 export interface IConvertParams {
     input: LocalFile;
@@ -69,9 +70,7 @@ export default abstract class BaseConverterPage extends Page {
 
         debugLog?.(`Converting file ${input.path}`);
 
-        const output = this.outputPath
-            ? new LocalFile(this.outputPath)
-            : await tempDiskCache.createTempFile(fileName);
+        const output = await tempDiskCache.createTempFile(fileName);
 
         const args = JSON.parse(this.args || "[]");
 
@@ -83,6 +82,9 @@ export default abstract class BaseConverterPage extends Page {
         if(!this.outputPath) {
             this.registerDisposable(file);
         } else {
+
+            await link(output.path, this.outputPath);
+
             return Content.nativeJson({});
         }
 
