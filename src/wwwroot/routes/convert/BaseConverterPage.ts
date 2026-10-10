@@ -9,6 +9,7 @@ import { CORS } from "../../../core/CORS.js";
 import { tempDiskCache } from "../../../core/tempDiskCache.js";
 import debugLog from "../../../debugLog.js";
 import FileConversionService from "../../../services/convert/FileConversionService.js";
+import EntityAccessError from "@entity-access/entity-access/dist/common/EntityAccessError.js";
 
 export interface IConvertParams {
     input: LocalFile;
@@ -53,7 +54,14 @@ export default abstract class BaseConverterPage extends Page {
             const rs = await fetch(this.sourceUrl);
             await input.writeAll(Readable.fromWeb(rs.body as any));
         } else {
-            input = new LocalFile(this.filePath, void 0, void 0, () => void 0);
+            if(!this.filePath) {
+                input = this.form.files[0];
+                if(!input) {
+                    throw new EntityAccessError(`File path not provided or file was not uploaded`);
+                }
+            } else {
+                input = new LocalFile(this.filePath, void 0, void 0, () => void 0);
+            }
         }
 
         debugLog?.(`Converting file ${input.path}`);
