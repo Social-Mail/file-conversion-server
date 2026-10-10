@@ -18,6 +18,10 @@ export default class extends Page {
 
         const output = await job.get(outputFileName);
 
+        if(!output.exists) {
+            return this.notFound(true);
+        }
+
         return new TempFileResult(output);
 
     }
