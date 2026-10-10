@@ -5,6 +5,7 @@ import sleep from './core/sleep.js';
 import { dirname } from 'path';
 import ensureDir from './core/FileApi.js';
 import { existsSync, unlinkSync } from 'fs';
+import { UnixSocketPath } from './core/UnixSocketPath.js';
 
 const numCPUs = process.env.SOCIAL_MAIL_CLUSTER_WORKERS
             ? Number(process.env.SOCIAL_MAIL_CLUSTER_WORKERS)
@@ -13,6 +14,7 @@ const numCPUs = process.env.SOCIAL_MAIL_CLUSTER_WORKERS
 export default class WebCluster extends ClusterInstance<typeof WebServer> {
 
     public static start(arg: typeof WebServer = WebServer) {
+        UnixSocketPath.clearSockets();
         const c = new WebCluster();
         c.run(arg);
     }
