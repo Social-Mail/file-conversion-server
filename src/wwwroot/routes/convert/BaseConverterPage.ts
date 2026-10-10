@@ -70,7 +70,7 @@ export default abstract class BaseConverterPage extends Page {
         debugLog?.(`Converting file ${input.path}`);
 
         const output = this.outputPath
-            ? await tempDiskCache.create(this.outputPath)
+            ? new LocalFile(this.outputPath)
             : await tempDiskCache.createTempFile(fileName);
 
         const args = JSON.parse(this.args || "[]");
