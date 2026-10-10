@@ -1,19 +1,20 @@
 import Page from "@entity-access/server-pages/dist/Page.js";
-import { tempDiskCache } from "../../../core/tempDiskCache.js";
+import { tempDiskCache } from "../../../../../../core/tempDiskCache.js";
 import { randomUUID } from "node:crypto";
 import { Query } from "@entity-access/server-pages/dist/core/Query.js";
 import { Agent, Dispatcher, fetch } from "undici";
-import globalEnv from "../../../globalEnv.js";
+import globalEnv from "../../../../../../globalEnv.js";
 import ServerLogger from "@entity-access/server-pages/dist/core/ServerLogger.js";
+import { Route } from "@entity-access/server-pages/dist/core/Route.js";
 
 let dispatcher: Dispatcher;
 
 export default class extends Page {
 
-
-    @Query
+    @Route
     type: string;
-    @Query
+
+    @Route
     outputFileName: string;
 
     async run() {
@@ -39,9 +40,16 @@ export default class extends Page {
             output: `/jobs/${id}/download/${outputFileName}`
         };
 
-        dispatcher ??= new Agent({
-            socketPath: globalEnv.port
-        });
+        dispatcher ??= new Agent(typeof globalEnv.port === "number"
+            ? {
+                connect: {
+                    port: globalEnv.port
+                }
+            }
+            : {
+                socketPath: globalEnv.port
+            }
+        );
 
         const url = new URL(`http://localhost/convert/${type}/${outputFileName}`);
         for(const [k,v] of this.request.URL.searchParams.entries()) {

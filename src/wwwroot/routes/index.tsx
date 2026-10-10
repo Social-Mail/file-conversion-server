@@ -14,18 +14,31 @@ export default class extends Page {
             </head>
             <body>
                 <WebAtomsLogo/>
-                Following methods are available.
+                <details>
+                    <summary>Convert</summary>
+                    <section>
+                        <form action="/convert/avif(250)/output.avif" method="get" target="_blank">
+                            <fieldset>
+                                <legend>Url</legend>
+                                <input name="sourceUrl" value="https://"/>
+                            </fieldset>
+                            <button type="submit">Go</button>
+                        </form>
+                    </section>
+                </details>
 
-                <h1>Convert</h1>
-                <section>
-                    <form action="/convert/avif(250)/output.avif" method="get" target="_blank">
-                        <fieldset>
-                            <legend>Url</legend>
-                            <input name="sourceUrl" value="https://"/>
-                        </fieldset>
-                        <button type="submit">Go</button>
-                    </form>
-                </section>
+                <details>
+                    <summary>Job</summary>
+                    <section>
+                        <form action="/jobs/start/avif(250)/output.avif" method="put" target="_blank">
+                            <fieldset>
+                                <legend>Url</legend>
+                                <input name="sourceUrl" value="https://"/>
+                            </fieldset>
+                            <button type="submit">Go</button>
+                        </form>
+                    </section>
+                </details>
             </body>
         </HtmlDocument>);
     }
