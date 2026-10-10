@@ -16,8 +16,8 @@ export default class extends Page {
         const job = jobFolder.get("job.json");
         const jobInfo = JSON.parse(await job.readAsText());
 
-        const { outputPath } = jobInfo;
-        const output = jobFolder.get(outputPath);
+        const { outputFileName } = jobInfo;
+        const output = jobFolder.get(outputFileName);
         if(!output.exists) {
 
             const failed = await jobFolder.get(`failed`);
