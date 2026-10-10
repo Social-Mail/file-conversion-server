@@ -22,6 +22,11 @@ export default class extends Page {
 
         const { type, outputFileName } = this;
 
+        console.log(JSON.stringify({
+            job: type,
+            outputFileName
+        }));
+
         const job = await tempDiskCache.create(`jobs/${id}/job.json`);
 
         const jobInfo = {
