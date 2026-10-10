@@ -80,8 +80,9 @@ export default abstract class BaseConverterPage extends Page {
         
         debugLog?.(`File ${input} converted`);
         
-
-        this.registerDisposable(file);
+        if(!this.outputPath) {
+            this.registerDisposable(file);
+        }
 
         debugLog?.(`Sending ${file.path}`);
 

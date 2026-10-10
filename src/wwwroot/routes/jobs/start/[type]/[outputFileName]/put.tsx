@@ -55,6 +55,7 @@ export default class extends Page {
             url.searchParams.append(k, v);
         }
         url.searchParams.set("outputPath", jobInfo.outputPath);
+        url.searchParams.set("keep", "yes");
 
         // fire and forget...
         fetch(url.toString(), {
