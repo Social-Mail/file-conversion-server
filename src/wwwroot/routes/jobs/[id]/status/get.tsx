@@ -19,9 +19,9 @@ export default class extends Page {
         if(!output) {
 
             const failed = await tempDiskCache.get(`jobs/${id}/failed`);
-            jobInfo.status = failed ? "failed" : "pending";
+            jobInfo.state = failed ? "failed" : "pending";
         } else {
-            jobInfo.status = "ready";
+            jobInfo.state = "ready";
         }
         return this.json(jobInfo);
     }
