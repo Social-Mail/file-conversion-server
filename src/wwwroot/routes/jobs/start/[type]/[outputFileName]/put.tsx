@@ -1,6 +1,5 @@
 import Page from "@entity-access/server-pages/dist/Page.js";
-import { tempDiskCache } from "../../../../../../core/tempDiskCache.js";
-import { randomUUID } from "node:crypto";
+import { JobFolder } from "../../../../../../core/tempDiskCache.js";
 import { Agent, Dispatcher, fetch } from "undici";
 import globalEnv from "../../../../../../globalEnv.js";
 import ServerLogger from "@entity-access/server-pages/dist/core/ServerLogger.js";
@@ -18,8 +17,6 @@ export default class extends Page {
 
     async run() {
 
-        const id = randomUUID();
-
         const { type, outputFileName } = this;
 
         console.log(JSON.stringify({
@@ -27,15 +24,18 @@ export default class extends Page {
             outputFileName
         }));
 
-        const job = await tempDiskCache.create(`jobs/${id}/job.json`);
+        const job = await JobFolder.create();
+        const output = job.get(outputFileName);
+
+        const id = job.id;
 
         const jobInfo = {
             id,
             url: this.url,
             type,
-            outputPath: `jobs/${id}/${outputFileName}`,
+            outputPath: output.path,
             outputFileName,
-            status: `/jobs/${id}/status/${outputFileName}`,
+            status: `/jobs/${id}/status`,
             output: `/jobs/${id}/download/${outputFileName}`
         };
 
@@ -62,7 +62,7 @@ export default class extends Page {
         }).catch(ServerLogger.error);
 
 
-        await job.writeAllText(JSON.stringify(jobInfo));
+        await job.get("job.json").writeAllText(JSON.stringify(jobInfo));
 
 
 

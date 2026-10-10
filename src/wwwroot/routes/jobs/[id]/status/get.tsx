@@ -1,6 +1,6 @@
 import { Route } from "@entity-access/server-pages/dist/core/Route.js";
 import Page from "@entity-access/server-pages/dist/Page.js";
-import { tempDiskCache } from "../../../../../core/tempDiskCache.js";
+import { JobFolder } from "../../../../../core/tempDiskCache.js";
 
 export default class extends Page {
 
@@ -11,15 +11,17 @@ export default class extends Page {
 
         const { id } = this;
 
-        const job = await tempDiskCache.get(`jobs/${id}/job.json`);
+        const jobFolder = JobFolder.from(id);
+
+        const job = jobFolder.get("job.json");
         const jobInfo = JSON.parse(await job.readAsText());
 
         const { outputPath } = jobInfo;
-        const output = await tempDiskCache.get(outputPath);
-        if(!output) {
+        const output = jobFolder.get(outputPath);
+        if(!output.exists) {
 
-            const failed = await tempDiskCache.get(`jobs/${id}/failed`);
-            jobInfo.state = failed ? "failed" : "pending";
+            const failed = await jobFolder.get(`failed`);
+            jobInfo.state = failed.exists ? "failed" : "pending";
         } else {
             jobInfo.state = "ready";
         }
