@@ -2,9 +2,6 @@ import { availableParallelism } from 'os';
 import WebServer from './WebServer.js';
 import ClusterInstance, { RecycledWorker } from "@entity-access/server-pages/dist/ClusterInstance.js";
 import sleep from './core/sleep.js';
-import { dirname } from 'path';
-import ensureDir from './core/FileApi.js';
-import { existsSync, unlinkSync } from 'fs';
 import { UnixSocketPath } from './core/UnixSocketPath.js';
 
 const numCPUs = process.env.SOCIAL_MAIL_CLUSTER_WORKERS
@@ -20,17 +17,6 @@ export default class WebCluster extends ClusterInstance<typeof WebServer> {
     }
 
     protected async runPrimary(): Promise<void> {
-
-        let port = (process.env.PORT || "8080") as any;
-        if (/^\d+$/.test(port)) {
-            port = Number(port) as any;
-        } else {
-            const dir = dirname(port);
-            ensureDir(dir);
-            if(existsSync(port)) {
-                unlinkSync(port);
-            }
-        }
 
         while(true) {
             const workers = [] as RecycledWorker[];
