@@ -10,7 +10,7 @@ export const spawnPromise = (path, args?: string[], options?: SpawnOptionsWithou
 }>((resolve, reject) => {
     const all = [];
     const { logCommand = true, throwOnFail = false, logData = true, logError = true } = options ??= {};
-    options.timeout ??= 5*60*1000;
+    options.timeout ??= 60*60*1000;
     const cd = spawn(path, args, options);
     const pid = cd.pid;
 
