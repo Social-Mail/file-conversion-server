@@ -63,7 +63,7 @@ export default class extends Page {
 
         // fire and forget...
         fetch(url.toString(), {
-            dispatcher
+            dispatcher: isSocketPort ? dispatcher : void 0
         }).catch(ServerLogger.error);
 
 
