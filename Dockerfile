@@ -60,6 +60,7 @@ ENV NODE_OPTIONS "--use-openssl-ca --enable-source-maps"
 ENV SSL_CERT_DIR /cache/root-certs
 
 VOLUME [ "/cache" ]
+VOLUME [ "/data" ]
 
 # USER root
 ENV HOST=0.0.0.0

@@ -4,6 +4,7 @@ import FileSize from "./FileSize.js";
 import { randomUUID } from "crypto";
 import ensureDir from "./FileApi.js";
 import { LocalFile } from "@entity-access/server-pages/dist/core/LocalFile.js";
+import globalEnv from "../globalEnv.js";
 
 const tmpdir = path.join("/fcs/cache", "t");
 
@@ -21,7 +22,7 @@ export class JobFolder {
     }
 
     static from(id: string) {
-        const folder = tmpdir + "/" + id;
+        const folder = globalEnv.jobsFolder + "/" + id;
         ensureDir(folder);
         return new JobFolder(id, folder);
     }
