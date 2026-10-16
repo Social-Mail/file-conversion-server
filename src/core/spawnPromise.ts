@@ -11,6 +11,12 @@ export const spawnPromise = (path, args?: string[], options?: SpawnOptionsWithou
     const all = [];
     const { logCommand = true, throwOnFail = false, logData = true, logError = true } = options ??= {};
     options.timeout ??= 60*60*1000;
+
+    console.log(JSON.stringify({
+        spawn: path,
+        args
+    }));
+
     const cd = spawn(path, args, options);
     const pid = cd.pid;
 
