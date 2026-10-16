@@ -64,7 +64,9 @@ export default class extends Page {
         // fire and forget...
         fetch(url.toString(), {
             dispatcher: isSocketPort ? dispatcher : void 0
-        }).catch(ServerLogger.error);
+        }).catch((error) => {
+            ServerLogger.error({ url, error });
+        });
 
 
         await job.get("job.json").writeAllText(JSON.stringify(jobInfo));
