@@ -53,6 +53,9 @@ export default abstract class BaseConverterPage extends Page {
 
         if (this.sourceUrl) {
             const u = new URL(this.sourceUrl);
+            console.log(JSON.stringify({
+                downloading: u.toString()
+            }))
             const { base } = parse(u.pathname);
             input = tempDiskCache.createTempFile(base);
             const rs = await fetch(this.sourceUrl);
