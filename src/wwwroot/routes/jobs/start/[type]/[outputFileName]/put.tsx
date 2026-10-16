@@ -4,6 +4,7 @@ import { Agent, Dispatcher, fetch } from "undici";
 import globalEnv from "../../../../../../globalEnv.js";
 import ServerLogger from "@entity-access/server-pages/dist/core/ServerLogger.js";
 import { Route } from "@entity-access/server-pages/dist/core/Route.js";
+import { Query } from "@entity-access/server-pages/dist/core/Query.js";
 
 let dispatcher: Dispatcher;
 
@@ -14,6 +15,9 @@ export default class extends Page {
 
     @Route
     outputFileName: string;
+
+    @Query
+    sourceUrl: string;
 
     async run() {
 
@@ -39,18 +43,18 @@ export default class extends Page {
             output: `/jobs/${id}/download/${outputFileName}`
         };
 
-        dispatcher ??= new Agent(typeof globalEnv.port === "number"
-            ? {
-                connect: {
-                    port: globalEnv.port
-                }
-            }
-            : {
+        const isSocketPort = typeof globalEnv.port !== "number";
+
+        dispatcher ??= isSocketPort
+            ? new Agent({
                 socketPath: globalEnv.port
-            }
-        );
+            })
+            : null;
 
         const url = new URL(`http://localhost/convert/${type}/${outputFileName}`);
+        if(!isSocketPort) {
+            url.port = globalEnv.port;
+        }
         for(const [k,v] of this.request.URL.searchParams.entries()) {
             url.searchParams.append(k, v);
         }
