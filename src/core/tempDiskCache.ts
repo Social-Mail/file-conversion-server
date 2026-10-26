@@ -5,6 +5,7 @@ import { randomUUID } from "crypto";
 import ensureDir from "./FileApi.js";
 import { LocalFile } from "@entity-access/server-pages/dist/core/LocalFile.js";
 import globalEnv from "../globalEnv.js";
+import { Readable } from "stream";
 
 const tmpdir = path.join("/fcs/cache", "t");
 
@@ -14,6 +15,18 @@ export const tempDiskCache = new BaseDiskCache({
     minSize: FileSize.parse("20gb"),
     maxAge: 1
 });
+
+export const downloadFileToTemp = async (url: string) => {
+    const u = new URL(url);
+    console.log(JSON.stringify({
+        downloading: url
+    }));
+    const { base } = parse(u.pathname);
+    const input = tempDiskCache.createTempFile(base);
+    const rs = await fetch(u);
+    await input.writeAll(Readable.fromWeb(rs.body as any));
+    return input;
+}
 
 export class JobFolder {
 
