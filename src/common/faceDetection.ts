@@ -1,8 +1,7 @@
 import faceApi from "./faceapi.js";
 
-const faceapi = faceApi as any;
 
-export const faceDetectionNet = faceapi.nets.ssdMobilenetv1;
+export const faceDetectionNet = faceApi.nets.ssdMobilenetv1;
 // export const faceDetectionNet = faceapi.nets.tinyFaceDetector;
 
 // SsdMobilenetv1Options
@@ -13,9 +12,9 @@ const inputSize = 448;
 const scoreThreshold = 0.5;
 
 function getFaceDetectorOptions(net) {
-  return net === faceapi.nets.ssdMobilenetv1
-    ? new faceapi.SsdMobilenetv1Options({ minConfidence })
-    : new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold });
+  return net === faceApi.nets.ssdMobilenetv1
+    ? new faceApi.SsdMobilenetv1Options({ minConfidence })
+    : new faceApi.TinyFaceDetectorOptions({ inputSize, scoreThreshold });
 }
 
 export const faceDetectionOptions = getFaceDetectorOptions(faceDetectionNet);

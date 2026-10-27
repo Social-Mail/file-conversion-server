@@ -1,36 +1,24 @@
 import sharp from "sharp";
-import type { Box, FaceDetection } from "@vladmandic/face-api";
-import { Canvas, loadImageData } from "../../../../common/env.js";
-import { faceDetectionNet, faceDetectionOptions } from "../../../../common/faceDetection.js";
-import faceApi from "../../../../common/faceapi.js";
+import tf from '@tensorflow/tfjs-node';
+import { Config, Human } from '@vladmandic/human';
+import { readFile } from "node:fs/promises";
+import FaceInfo from "./FaceInfo.js";
 
-export interface IFace {
-    score: number;
-    box: Box;
-}
 
-export default async function detect(input): Promise<IFace[]> {
+export default async function detect(input): Promise<FaceInfo[]> {
 
-    await faceApi.tf.setBackend("wasm");
+    const config: Partial<Config> = {
+        backend: 'tensorflow', // Use the optimized node backend
+        face: {
+            enabled: true,
+        },
+    };
 
-    await faceDetectionNet.loadFromDisk("/app/models");
+    const human = new Human(config);
+    await human.load();
 
-    const { height } = await sharp(input).metadata();
-    const scale = height / 700;
-    const imgSmall =
-        await sharp(input)
-        .resize({ height: 700 })
-        .png();
+    const tensor = tf.node.decodeImage(await readFile(input), 3);
 
-    const img = await loadImageData(imgSmall);
-
-    const canvas = new Canvas(img.width, img.height);
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-
-    const detections: FaceDetection[] = await faceApi.detectAllFaces(canvas as any, faceDetectionOptions);
-    return detections.map((s) => ({
-        score: s.score,
-        box: s.box.rescale(scale)
-    }));
+    const result = await human.detect(tensor);
+    return result.face.map((x) => new FaceInfo(x));
 }

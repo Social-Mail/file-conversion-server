@@ -19,6 +19,12 @@ export default async function faceCircle(file: { path: string }, ... args: any[]
             height
         } = originalSize;
 
+        console.log(JSON.stringify({
+            action: "face-circle",
+            width,
+            height
+        }))
+
         if (width > height) {
             width = height;
         } else {
@@ -45,8 +51,8 @@ export default async function faceCircle(file: { path: string }, ... args: any[]
 
             const headshotHeight = face.box.height * 2 / 1.4;
             const headshotWidth = headshotHeight;
-            const headshotLeft = Math.max(0, ~~((face.box.left + face.box.width / 2) - (headshotWidth / 2)));
-            const headshotTop = Math.max(0, ~~((face.box.top + face.box.height / 2) - (headshotHeight / 2)));
+            const headshotLeft = Math.max(0, ~~((face.box.x + face.box.width / 2) - (headshotWidth / 2)));
+            const headshotTop = Math.max(0, ~~((face.box.y + face.box.height / 2) - (headshotHeight / 2)));
 
             const rect = {
                 left: headshotLeft,
