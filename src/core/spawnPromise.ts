@@ -11,7 +11,8 @@ export const spawnPromise = (path, args?: string[], options?: SpawnOptionsWithou
     const all = [];
     const { logCommand = true, throwOnFail = false, logData = true, logError = true } = options ??= {};
     options.timeout ??= 60*60*1000;
-
+    options.env ??= {};
+    options.env.FCS_DEBUG = process.env.FCS_DEBUG;
     console.log(JSON.stringify({
         spawn: path,
         args
