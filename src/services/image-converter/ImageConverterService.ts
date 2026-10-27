@@ -137,16 +137,23 @@ export default class ImageConverterService {
 
         debugLog?.(`Sending input file ${file.path} to ${type}`);
 
-        const result = await IsolatedProcess.convertImage({
+        await IsolatedProcess.convertImage({
             type,
             input: { path: file.path },
             output: { path: tf.path },
             outputFileName
         });
 
-        if (tf.isEmpty || result.status !== 0) {
-            throw new Error(`Image conversion failed from ${file.path} to ${tf.path} ${result.all}`);
-        }
+        // const result = await IsolatedProcess.convertImage({
+        //     type,
+        //     input: { path: file.path },
+        //     output: { path: tf.path },
+        //     outputFileName
+        // });
+
+        // if (tf.isEmpty || result.status !== 0) {
+        //     throw new Error(`Image conversion failed from ${file.path} to ${tf.path} ${result.all}`);
+        // }
 
         return tf;
     }
