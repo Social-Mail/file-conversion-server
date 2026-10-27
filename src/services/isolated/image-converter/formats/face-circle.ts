@@ -2,7 +2,7 @@
 import sharp, { Sharp } from "sharp";
 import detect from "./detect700.js";
 
-export default async function (file: { path: string }, ... args: any[] ): Promise<Sharp> {
+export default async function faceCircle(file: { path: string }, ... args: any[] ): Promise<Sharp> {
 
     // const size = {
     //     failOnError: false,

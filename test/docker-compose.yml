@@ -10,6 +10,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - PORT=80
+      - DEBUG=true
     ports:
       - "9991:80"
       - "9229:9229"

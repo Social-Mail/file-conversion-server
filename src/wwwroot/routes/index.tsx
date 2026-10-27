@@ -17,7 +17,7 @@ export default class extends Page {
                 <details>
                     <summary>Convert</summary>
                     <section>
-                        <form action="/convert/avif(250)/output.avif" method="get" target="_blank">
+                        <form action="/convert/face-circle/output.png" method="get" target="_blank">
                             <fieldset>
                                 <legend>Url</legend>
                                 <input name="sourceUrl" value="https://"/>
