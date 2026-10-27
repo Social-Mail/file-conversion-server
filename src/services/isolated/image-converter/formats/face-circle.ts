@@ -4,9 +4,9 @@ import detect from "./detect700.js";
 
 export default async function (file: { path: string }, ... args: any[] ): Promise<Sharp> {
 
-    const size = {
-        failOnError: false,
-    } as any;
+    // const size = {
+    //     failOnError: false,
+    // } as any;
 
     // try {
 
