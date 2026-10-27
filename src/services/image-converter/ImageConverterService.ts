@@ -10,6 +10,7 @@ import { spawnPromise } from "../../core/spawnPromise.js";
 import { ImagesFolder } from "../../core/ImagesFolder.js";
 import IsolatedProcess from "../isolated/IsolatedProcess.js";
 import debugLog from "../../debugLog.js";
+import ServerLogger from "@entity-access/server-pages/dist/core/ServerLogger.js";
 
 @RegisterScoped
 export default class ImageConverterService {
@@ -91,6 +92,7 @@ export default class ImageConverterService {
         try {
             return await this.transformInternal(type, file, outputFileName);
         } catch (error) {
+            ServerLogger.error(error);
             debugLog?.(error.text ?? error);
             if(error.toString().includes("No decoding plugin")) {
                 if (retry) {
