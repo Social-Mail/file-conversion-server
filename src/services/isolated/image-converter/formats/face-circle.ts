@@ -8,7 +8,7 @@ export default async function (file: { path: string }, ... args: any[] ): Promis
         failOnError: false,
     } as any;
 
-    try {
+    // try {
 
         const input = file.path;
 
@@ -100,10 +100,10 @@ export default async function (file: { path: string }, ... args: any[] ): Promis
                 blend: "dest-in"
             }
         ]);
-    } catch (e) {
-        console.log(e.stack ?? e);
-        const err = `${JSON.stringify(size)}\n${e.cause?.stack
-            ? (e.cause.stack + (e.stack ?? e)) : (e.stack ?? e)}`;
-        throw new Error(err);
-    }
+    // } catch (e) {
+    //     console.log(e.stack ?? e);
+    //     const err = `${JSON.stringify(size)}\n${e.cause?.stack
+    //         ? (e.cause.stack + (e.stack ?? e)) : (e.stack ?? e)}`;
+    //     throw new Error(err);
+    // }
 }
