@@ -2,8 +2,9 @@ import tf from '@tensorflow/tfjs';
 // 1. Crucial: Explicitly import the WASM backend so it registers with TFJS
 import '@tensorflow/tfjs-backend-wasm'; 
 import { Config, Human } from '@vladmandic/human';
-import { readFile } from "node:fs/promises";
 import FaceInfo from "./FaceInfo.js";
+
+import { Canvas, loadImage } from "skia-canvas";
 
 const init = (async () => {
     await tf.setBackend("wasm");
@@ -26,6 +27,12 @@ export default async function detect(input): Promise<FaceInfo[]> {
 
     // const tensor = tf..decodeImage(await readFile(input), 3);
 
-    const result = await human.detect(await readFile(input) as any);
+    const image = await loadImage(input);
+
+    const canvas = new Canvas(image.width, image.height);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(image, 0, 0);
+
+    const result = await human.detect(canvas as any);
     return result.face.map((x) => new FaceInfo(x));
 }
