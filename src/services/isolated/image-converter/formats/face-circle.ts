@@ -102,7 +102,8 @@ export default async function (file: { path: string }, ... args: any[] ): Promis
         ]);
     } catch (e) {
         console.log(e.stack ?? e);
-        const err = `${JSON.stringify(size)}\n${e.stack ? e.stack : e}`;
+        const err = `${JSON.stringify(size)}\n${e.cause?.stack
+            ? (e.cause.stack + (e.stack ?? e)) : (e.stack ?? e)}`;
         throw new Error(err);
     }
 }
