@@ -9,7 +9,7 @@ export default class EmailParserService {
 
     public async parse(file: LocalFile, sanitize = true) {
         const parsed = await new Promise<ParsedMail>((resolve, reject) => {
-            simpleParser(file.openRead(), {
+            simpleParser(file.openRead() as any, {
                 keepCidLinks: true,
                 skipTextLinks: true
             },  (error, result) => {

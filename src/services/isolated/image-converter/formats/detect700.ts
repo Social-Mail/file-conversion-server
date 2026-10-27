@@ -1,4 +1,3 @@
-import sharp from "sharp";
 import tf from '@tensorflow/tfjs-node';
 import { Config, Human } from '@vladmandic/human';
 import { readFile } from "node:fs/promises";

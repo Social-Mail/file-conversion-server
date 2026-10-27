@@ -39,8 +39,8 @@ export default async function (file: { path: string }, ... args: any[] ): Promis
 
             const headshotHeight = face.box.height * 4 / 1.6;
             const headshotWidth = headshotHeight * width / height;
-            const headshotLeft = (face.box.left + face.box.width / 2) - (headshotWidth / 2);
-            const headshotTop = (face.box.top + face.box.height / 2) - (headshotHeight / 3);
+            const headshotLeft = (face.box.x + face.box.width / 2) - (headshotWidth / 2);
+            const headshotTop = (face.box.y + face.box.height / 2) - (headshotHeight / 3);
 
             const rect = {
                 left: ~~headshotLeft,
