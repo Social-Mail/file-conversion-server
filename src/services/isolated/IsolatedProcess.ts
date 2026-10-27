@@ -5,7 +5,7 @@ import { spawnPromise } from "../../core/spawnPromise.js";
 
 export default class IsolatedProcess {
 
-    static async convertImage(p: IImageConverter) {
+    static convertImage(p: IImageConverter) {
         return spawnPromise(process.execPath, [
             "--enable-source-maps",
             fileURLToPath(import.meta.resolve("./image-converter/index.js")),
