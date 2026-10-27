@@ -1,6 +1,6 @@
 {
   "name": "@social-mail/file-conversion-server",
-  "version": "1.0.128",
+  "version": "1.0.129",
   "description": "## Phase 1",
   "main": "index.js",
   "type": "module",
