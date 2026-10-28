@@ -1,5 +1,5 @@
 # 🟩 SWAPPED: Moving from node:24-alpine to node:24-slim for full native library support
-FROM node:24-slim
+FROM node:22-slim
 
 RUN echo "deb http://deb.debian.org/debian bookworm contrib non-free" > /etc/apt/sources.list.d/contrib.list \
     && echo "deb http://deb.debian.org/debian bookworm-updates contrib non-free" >> /etc/apt/sources.list.d/contrib.list \
