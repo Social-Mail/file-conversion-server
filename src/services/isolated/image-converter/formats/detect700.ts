@@ -5,7 +5,6 @@ import { Config, Human } from "../../../../../node_modules/@vladmandic/human/dis
 import FaceInfo from "./FaceInfo.js";
 
 import { Canvas, loadImage } from "skia-canvas";
-import { fileURLToPath } from 'node:url';
 
 const init = (async () => {
     await tf.setBackend("wasm");
