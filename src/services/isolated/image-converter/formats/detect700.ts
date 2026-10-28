@@ -1,7 +1,7 @@
 import tf from '@tensorflow/tfjs-core';
 // 1. Crucial: Explicitly import the WASM backend so it registers with TFJS
 import '@tensorflow/tfjs-backend-wasm'; 
-import { Config, Human } from '@vladmandic/human';
+import { Config, Human } from "../../../../../node_modules/@vladmandic/human/dist/human.node-wasm.js";
 import FaceInfo from "./FaceInfo.js";
 
 import { Canvas, loadImage } from "skia-canvas";
