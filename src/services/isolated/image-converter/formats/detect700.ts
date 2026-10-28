@@ -7,7 +7,7 @@ export default async function detect(input): Promise<FaceInfo[]> {
 
 
     const config: Partial<Config> = {
-        backend: 'wasm', // Use the optimized node backend
+        backend: 'tensorflow', // Use the optimized node backend
         face: {
             enabled: true,
         },

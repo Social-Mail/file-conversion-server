@@ -56,7 +56,9 @@ WORKDIR /ffmpeg
 COPY --from=mwader/static-ffmpeg:7.1 /ffmpeg /ffmpeg/
 COPY --from=mwader/static-ffmpeg:7.1 /ffprobe /ffmpeg/
 
+
 ENV NODE_OPTIONS "--use-openssl-ca --enable-source-maps"
+ENV NPM_CONFIG_STRICT_SSL=false
 ENV SSL_CERT_DIR /cache/root-certs
 
 VOLUME [ "/cache" ]

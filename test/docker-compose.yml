@@ -14,4 +14,4 @@ services:
     ports:
       - "9991:80"
       - "9229:9229"
-    entrypoint: ["/sbin/tini", "--", "npm", "run", "dev"]
+    entrypoint: ["/bin/tini", "--", "npm", "run", "dev"]
