@@ -20,21 +20,21 @@ export default class extends Page {
                         <form action="/convert/avif(200)/output.avif" method="get" target="_blank">
                             <fieldset>
                                 <legend>Avif</legend>
-                                <input name="sourceUrl" value="https://github.com/Social-Mail/file-conversion-server/raw/refs/heads/change-base-image/test/samples/sample.webm"/>
+                                <input name="sourceUrl" value="https://github.com/Social-Mail/file-conversion-server/raw/refs/heads/main/test/samples/sample.webm"/>
                             </fieldset>
                             <button type="submit">Go</button>
                         </form>
                         <form action="/convert/face-circle/face-circle.png" method="get" target="_blank">
                             <fieldset>
                                 <legend>Face-Circle</legend>
-                                <input name="sourceUrl" value="https://github.com/Social-Mail/file-conversion-server/raw/refs/heads/change-base-image/test/samples/sample.jpg"/>
+                                <input name="sourceUrl" value="https://github.com/Social-Mail/file-conversion-server/raw/refs/heads/main/test/samples/sample.jpg"/>
                             </fieldset>
                             <button type="submit">Go</button>
                         </form>
                         <form action="/convert/pdf/output.pdf" method="get" target="_blank">
                             <fieldset>
                                 <legend>PDF</legend>
-                                <input name="sourceUrl" value="https://github.com/Social-Mail/file-conversion-server/raw/refs/heads/change-base-image/test/samples/sample.xls"/>
+                                <input name="sourceUrl" value="https://github.com/Social-Mail/file-conversion-server/raw/refs/heads/main/test/samples/sample.xls"/>
                             </fieldset>
                             <button type="submit">Go</button>
                         </form>
