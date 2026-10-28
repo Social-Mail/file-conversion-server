@@ -5,6 +5,7 @@ import { Config, Human } from "../../../../../node_modules/@vladmandic/human/dis
 import FaceInfo from "./FaceInfo.js";
 
 import { Canvas, loadImage } from "skia-canvas";
+import { fileURLToPath } from 'node:url';
 
 const init = (async () => {
     await tf.setBackend("wasm");
@@ -18,6 +19,7 @@ export default async function detect(input): Promise<FaceInfo[]> {
         face: {
             enabled: true,
         },
+        modelBasePath: fileURLToPath(import.meta.resolve("@vladmandic/human/models/"))
     };
 
     await init;
