@@ -2,8 +2,6 @@ import * as tf from '@tensorflow/tfjs-node';
 import { Config, Human } from "../../../../../node_modules/@vladmandic/human/dist/human.node.js";
 import FaceInfo from "./FaceInfo.js";
 
-import { Canvas, loadImage } from "skia-canvas";
-
 export default async function detect(input): Promise<FaceInfo[]> {
 
 
