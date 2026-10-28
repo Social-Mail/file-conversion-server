@@ -5,6 +5,7 @@ import { Config, Human } from "../../../../../node_modules/@vladmandic/human/dis
 import FaceInfo from "./FaceInfo.js";
 
 import { Canvas, loadImage } from "skia-canvas";
+import { fileURLToPath } from 'node:url';
 
 const init = (async () => {
     await tf.setBackend("wasm");
@@ -17,8 +18,9 @@ export default async function detect(input): Promise<FaceInfo[]> {
         backend: 'wasm', // Use the optimized node backend
         face: {
             enabled: true,
+            modelPath: fileURLToPath(import.meta.resolve("../../../../../node_modules/@vladmandic/human/models/faceres.json"))
         },
-        modelBasePath: import.meta.resolve("../../../../../node_modules/@vladmandic/human/models/")
+        // modelBasePath: import.meta.resolve("../../../../../node_modules/@vladmandic/human/models/")
     };
 
     await init;
