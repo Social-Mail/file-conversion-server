@@ -3,7 +3,7 @@ FROM node:24-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     tini \
-    openjdk-17-jr-headless \
+    openjdk-17-jre-headless \
     openssl \
     ca-certificates \
     bash \
