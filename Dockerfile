@@ -69,7 +69,7 @@ ENV SELF_HOST=true
 ENV PORT=8484
 ENV NODE_TLS_REJECT_UNAUTHORIZED=0
 EXPOSE 8484
-ENTRYPOINT ["npm", "start"]
+ENTRYPOINT ["/bin/tini", "--" , "npm", "start"]
 
 # Run Server Configuration
 WORKDIR /app

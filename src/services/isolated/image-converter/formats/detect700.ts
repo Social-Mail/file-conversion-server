@@ -1,3 +1,4 @@
+import * as tf from '@tensorflow/tfjs-node'; 
 import { Config, Human } from "../../../../../node_modules/@vladmandic/human/dist/human.node.js";
 import FaceInfo from "./FaceInfo.js";
 
@@ -17,14 +18,7 @@ export default async function detect(input): Promise<FaceInfo[]> {
     const human = new Human(config);
     await human.load();
 
-    // const tensor = tf..decodeImage(await readFile(input), 3);
-
-    const image = await loadImage(input);
-
-    const canvas = new Canvas(image.width, image.height);
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(image, 0, 0);
-
-    const result = await human.detect(canvas as any);
+    const image = await tf.node.decodeImage(input, 3);
+    const result = await human.detect(image);
     return result.face.map((x) => new FaceInfo(x));
 }
