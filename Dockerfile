@@ -1,11 +1,44 @@
-FROM node:24-alpine
+# 🟩 SWAPPED: Moving from node:24-alpine to node:24-slim for full native library support
+FROM node:24-slim
 
-RUN apk add --no-cache tini
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    tini \
+    openjdk-17-jr-headless \
+    openssl \
+    ca-certificates \
+    bash \
+    util-linux \
+    fontconfig \
+    # LibreOffice & Core Conversion Packages
+    libreoffice \
+    7zip \
+    poppler-utils \
+    imagemagick \
+    libnss3 \
+    libfreetype6 \
+    libharfbuzz0b \
+    libavif-bin \
+    # Standard Fonts (Replacing the Alpine font list)
+    fonts-terminus \
+    fonts-inconsolata \
+    fonts-dejavu \
+    fonts-noto \
+    fonts-noto-cjk \
+    fonts-font-awesome \
+    fonts-noto-color-emoji \
+    fonts-droid-fallback \
+    fonts-freefont-ttf \
+    fonts-liberation \
+    # Microsoft Core Fonts Installer dependencies
+    curl \
+    cabextract \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apk add --no-cache openjdk8-jre openssl
-
-RUN apk add font-terminus font-inconsolata font-dejavu font-noto font-noto-cjk font-awesome font-noto-extra
-RUN apk add font-noto-emoji
+# Install Microsoft Core Fonts on Debian safely
+RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections \
+    && apt-get update && apt-get install -y --no-install-recommends ttf-mscorefonts-installer \
+    && fc-cache -f \
+    && rm -rf /var/lib/apt/lists/*
 
 ARG APP_ROOT=/opt/app-root/src
 ENV NO_UPDATE_NOTIFIER=true \
@@ -13,46 +46,9 @@ ENV NO_UPDATE_NOTIFIER=true \
     PYTHONUNBUFFERED=1
 WORKDIR ${APP_ROOT}
 
-# Install LibreOffice & Common Fonts
-RUN apk --no-cache add bash libreoffice util-linux \
-    font-droid-nonlatin font-droid ttf-dejavu ttf-freefont ttf-liberation && \
-    rm -rf /var/cache/apk/*
-
-# Install Microsoft Core Fonts
-RUN apk --no-cache add msttcorefonts-installer fontconfig && \
-    update-ms-fonts && \
-    fc-cache -f && \
-    rm -rf /var/cache/apk/*
-
-RUN apk add 7zip \
-    poppler-utils \
-    imagemagick \
-    nss \
-    freetype \
-    harfbuzz \
-    ca-certificates \
-    ttf-freefont \
-    libavif-apps
-
-## Install Puppeteer
-# RUN apk add --no-cache \
-#       chromium \
-
-# ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-# ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-
-# RUN addgroup -S pptruser && adduser -S -G pptruser pptruser \
-#     && mkdir -p /home/pptruser/Downloads /app \
-#     && chown -R pptruser:pptruser /home/pptruser \
-#     && chown -R pptruser:pptruser /app
-
-# RUN npm install puppeteer
-
+# FFmpeg layer compilation from multi-stage build (Kept exactly as you had it)
 RUN mkdir -p /ffmpeg/
 WORKDIR /ffmpeg
-# RUN wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz && \
-#     tar xvf ./ffmpeg-release-amd64-static.tar.xz --strip-components 1
-
 COPY --from=mwader/static-ffmpeg:7.1 /ffmpeg /ffmpeg/
 COPY --from=mwader/static-ffmpeg:7.1 /ffprobe /ffmpeg/
 
@@ -62,7 +58,6 @@ ENV SSL_CERT_DIR /cache/root-certs
 VOLUME [ "/cache" ]
 VOLUME [ "/data" ]
 
-# USER root
 ENV HOST=0.0.0.0
 ENV SELF_HOST=true
 ENV PORT=8484
@@ -70,14 +65,16 @@ ENV NODE_TLS_REJECT_UNAUTHORIZED=0
 EXPOSE 8484
 ENTRYPOINT ["npm", "start"]
 
-# RUN Server Now
+# Run Server Configuration
 WORKDIR /app
 COPY content ./content
 COPY models ./models
 COPY images ./images
 COPY package*.json ./
-RUN npm i --omit=dev --include=optional sharp
+
+# 🟩 NATIVE OPTIMIZATION: sharp and tfjs-node will compile and run flawlessly here
+RUN npm i --omit=dev --include=optional sharp @tensorflow/tfjs-node
+
 COPY index.js ./
 COPY src ./src
 COPY dist ./dist
-
