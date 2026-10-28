@@ -21,7 +21,6 @@
   "dependencies": {
     "@entity-access/entity-access": "^1.2.51",
     "@entity-access/server-pages": "^1.1.682",
-    "@tensorflow/tfjs-backend-wasm": "^4.22.0",
     "@tensorflow/tfjs-core": "^4.22.0",
     "@tensorflow/tfjs-node": "^4.22.0",
     "@vladmandic/human": "^3.3.6",
