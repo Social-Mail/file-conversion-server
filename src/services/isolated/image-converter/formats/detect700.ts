@@ -19,7 +19,7 @@ export default async function detect(input): Promise<FaceInfo[]> {
         face: {
             enabled: true,
         },
-        modelBasePath: fileURLToPath(import.meta.resolve("../../../../../node_modules/@vladmandic/human/models/"))
+        modelBasePath: import.meta.resolve("../../../../../node_modules/@vladmandic/human/models/")
     };
 
     await init;
