@@ -17,9 +17,23 @@ export default class extends Page {
                 <details>
                     <summary>Convert</summary>
                     <section>
-                        <form action="/convert/face-circle/output.png" method="get" target="_blank">
+                        <form action="/convert/avif(200)/output.avif" method="get" target="_blank">
                             <fieldset>
-                                <legend>Url</legend>
+                                <legend>Avif</legend>
+                                <input name="sourceUrl" value="https://"/>
+                            </fieldset>
+                            <button type="submit">Go</button>
+                        </form>
+                        <form action="/convert/face-circle/face-circle.png" method="get" target="_blank">
+                            <fieldset>
+                                <legend>Face-Circle</legend>
+                                <input name="sourceUrl" value="https://"/>
+                            </fieldset>
+                            <button type="submit">Go</button>
+                        </form>
+                        <form action="/convert/pdf/output.pdf" method="get" target="_blank">
+                            <fieldset>
+                                <legend>PDF</legend>
                                 <input name="sourceUrl" value="https://"/>
                             </fieldset>
                             <button type="submit">Go</button>
