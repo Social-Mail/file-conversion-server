@@ -17,7 +17,7 @@ export default async function detect(input): Promise<FaceInfo[]> {
     const human = new Human(config);
     await human.load();
 
-    const image = await tf.node.decodeImage(await readFile(input), 3);
+    const image = tf.node.decodeImage(await readFile(input), 3);
     const result = await human.detect(image);
     return result.face.map((x) => new FaceInfo(x));
 }
