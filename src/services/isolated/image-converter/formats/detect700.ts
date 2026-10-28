@@ -1,4 +1,4 @@
-import * as tf from '@tensorflow/tfjs-node'; 
+import tf from '@tensorflow/tfjs-node'; 
 import { Config, Human } from "../../../../../node_modules/@vladmandic/human/dist/human.node.js";
 import FaceInfo from "./FaceInfo.js";
 import { readFile } from 'node:fs/promises';
